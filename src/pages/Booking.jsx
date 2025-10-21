@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Clock, Users, Calendar } from "lucide-react";
-import logo from "@/assets/rasa_logo.png";
-import bookingImage from "@/assets/booking.png";
+import { useLocation } from "react-router-dom";
+import Logo from "@/assets/rasa_logo.png";
+import { Calendar, Clock, Users } from "lucide-react";
 import { PhoneInput } from "@/components/ui/phone-input";
+import bookingImage from "@/assets/booking.png";
 
 export default function Booking() {
   const [verificationCode, setVerificationCode] = useState("");
+  const location = useLocation();
+  const bookingData = location.state || {};
 
   return (
     <div className="mx-auto px-4 mt-4">
@@ -22,7 +25,7 @@ export default function Booking() {
           <div className="space-y-6">
             {/* Restaurant Header */}
             <div className="flex items-start gap-4">
-              <img src={logo} alt="Raasa Restaurant Logo" />
+              <img src={Logo} alt="Raasa Restaurant Logo" />
               <div className="flex-1">
                 <h2 className="text-xl font-bold text-gray-900">
                   Raasa Restaurant
@@ -30,23 +33,23 @@ export default function Booking() {
                 <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
-                    <span>Oct 30, 2025</span>
+                    <span>{bookingData.date || "Date"}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    <span>6:00 P.M</span>
+                    <span>{bookingData.time || "Time"}</span>
                   </div>
                   <div className="flex items-center gap-1">
                     <Users className="w-4 h-4" />
-                    <span>2 People</span>
+                    <span>{bookingData.people || "People"}</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Description */}
-            <div className="space-y-3">
-              <p className="text-sm text-gray-700 leading-relaxed bg-[F0A800]/13 p-2">
+            <div className="space-y-3 bg-amber-100 p-2">
+              <p className="text-sm text-gray-700 leading-relaxed">
                 Lorem ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem ipsum has been the industry's standard dummy
                 text ever since the 1500s, when an unknown printer took...
@@ -71,7 +74,6 @@ export default function Booking() {
                   placeholder="Enter your phone number"
                   classNamew="w-full"
                 />
-
                 <span className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">
                   Send
                 </span>
