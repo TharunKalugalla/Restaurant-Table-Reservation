@@ -5,6 +5,7 @@ import NotFound from "./pages/page_not_found";
 import Layout from "./layout/Layout";
 import AuthLayout from "./layout/AuthLayout";
 import Loging from "./pages/Loging";
+import Booking from "./pages/Booking";
 
 export default function RouterContainer() {
   return (
@@ -18,6 +19,7 @@ export default function RouterContainer() {
         </Route>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/booking" element={<Booking />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="*" element={<NotFound />} />
