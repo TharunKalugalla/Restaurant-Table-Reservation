@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import map from "@/assets/map.png";
-import { Users, UtensilsCrossed } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Users, UtensilsCrossed, ChevronDown } from "lucide-react";
 
 export default function ReservationForm() {
   const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ export default function ReservationForm() {
           Make a reservation
         </h3>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form className="space-y-4">
           {/* Table and People Selection */}
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -47,12 +47,13 @@ export default function ReservationForm() {
                   name="table"
                   value={formData.table}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
+                  className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
                 >
                   <option>PS Table 1</option>
                   <option>PS Table 2</option>
                   <option>PS Table 3</option>
                 </select>
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
 
@@ -66,12 +67,13 @@ export default function ReservationForm() {
                   name="people"
                   value={formData.people}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-3 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
+                  className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
                 >
                   <option>2-2 People</option>
                   <option>4-4 People</option>
                   <option>6-6 People</option>
                 </select>
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
           </div>
@@ -105,15 +107,15 @@ export default function ReservationForm() {
             </div>
           </div>
 
-          {/* Submit Button */}
-          <Link to="/booking">
+          {/* Navigation Button */}
+          <a href="/booking">
             <Button
-              type="submit"
+              type="button"
               className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
             >
               Book Now
             </Button>
-          </Link>
+          </a>
         </form>
       </Card>
     </div>
