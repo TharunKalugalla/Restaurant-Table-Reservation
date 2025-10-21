@@ -14,7 +14,7 @@ export default function PhotoGallery() {
   ];
 
   return (
-    <div>
+    <div id="photo">
       <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
         Photos
       </h2>

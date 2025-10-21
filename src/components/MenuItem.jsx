@@ -14,7 +14,7 @@ export default function MenuItem() {
   ];
 
   return (
-    <div>
+    <div id="menu">
       <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
         Menu
       </h2>

@@ -7,6 +7,16 @@ import MenuItem from "@/components/MenuItem";
 import Reviews from "@/components/Review";
 
 export default function Home() {
+  const photosRef = React.useRef(null);
+  const menusRef = React.useRef(null);
+  const reviewsRef = React.useRef(null);
+
+  const handleScrollTo = (ref) => {
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="flex flex-col w-full mx-auto bg-white mt-4">
       <div className="rounded-lg flex w-fit mx-auto my-auto">
@@ -37,29 +47,33 @@ export default function Home() {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-8 border-b border-border">
-              <button className="pb-3 text-amber-600 border-b-2 border-amber-600 font-medium">
+            <div className="flex gap-8 border-b border-border sticky top-0 bg-white pt-4">
+              <button className="pb-3 text-amber-600 border-b-2 border-amber-600 font-medium" onClick={() => handleScrollTo(photosRef)}>
                 Photos
               </button>
-              <button className="pb-3 text-muted-foreground hover:text-foreground transition">
+              <button className="pb-3 text-muted-foreground hover:text-foreground transition" onClick={() => handleScrollTo(menusRef)}>
                 Menus
               </button>
-              <button className="pb-3 text-muted-foreground hover:text-foreground transition">
+              <button className="pb-3 text-muted-foreground hover:text-foreground transition" onClick={() => handleScrollTo(reviewsRef)}>
                 Reviews
               </button>
             </div>
           </div>
 
           {/* Content */}
-          <div className="mt-4 p-4 lg:p-0">
+          <div className="mt-4 p-4 lg:p-0" ref={photosRef}>
             <PhotoGallery />
           </div>
-          <div className="mt-8 p-4 lg:p-0">
+          <div className="mt-8 p-4 lg:p-0" ref={menusRef}>
             <MenuItem />
           </div>
-          <div className="mt-8 p-4 lg:p-0">
+          <div className="mt-8 p-4 lg:p-0" ref={reviewsRef}>
             <Reviews />
           </div>
+        </div>
+
+        <div className="flex flex-col">
+
         </div>
       </div>
     </div>

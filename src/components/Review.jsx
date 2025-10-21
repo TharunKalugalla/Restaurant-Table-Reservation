@@ -57,7 +57,7 @@ export default function Reviews() {
   };
 
   return (
-    <div>
+    <div id="review">
       {/* Heading */}
       <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Reviews</h2>
       <p className="text-sm mb-6 text-justify text-muted-foreground">
