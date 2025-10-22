@@ -1,17 +1,28 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Logo from "@/assets/rasa_logo.png";
-import { Calendar, Clock, FileText, Mail, User, Users } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  FileText,
+  Mail,
+  User,
+  Users,
+  UtensilsCrossed,
+} from "lucide-react";
 import { PhoneInput } from "@/components/ui/phone-input";
 import bookingImage from "@/assets/booking.png";
 import bookingImage2 from "@/assets/reservation_image.png";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import ReservationCompleteMassege from "@/components/ReservationCompleteMassege";
 
 export default function Booking() {
   const [verificationCode, setVerificationCode] = useState("");
   const location = useLocation();
   const bookingData = location.state || {};
   const [visibleForm, setVisibleForm] = useState(false);
+  const [completeReservation, setCompleteReservation] = useState(false);
   const [verificationError, setVerificationError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -19,6 +30,9 @@ export default function Booking() {
     occasion: "",
     specialRequest: "",
   });
+
+  console.log("Received bookingData:", bookingData);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +45,9 @@ export default function Booking() {
       setVerificationError("");
       setVisibleForm(true);
     } else {
-      setVerificationError("Invalid verification code. Please try 1234 for demo.");
+      setVerificationError(
+        "Invalid verification code. Please try 1234 for demo."
+      );
       setVisibleForm(false);
     }
   };
@@ -41,13 +57,17 @@ export default function Booking() {
     console.log("Reservation details submitted:", formData);
   };
 
+  const handleReservation = () => {
+    setVisibleForm(false);
+    setCompleteReservation(true);
+  };
+
   return (
     <div className="mx-auto mt-4">
       {/*------------------------------------------------------------------------------------------------------------------------
       ------------------------------------------------- Main Content ------------------------------------------------------------
       ---------------------------------------------------------------------------------------------------------------------------*/}
       <div className="bg-white shadow-sm p-8 pb-10">
-
         {/*---------------------------------------------- Header ----------------------------------------------------------------*/}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">
@@ -55,14 +75,23 @@ export default function Booking() {
           </h1>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/*------------------------------------- Left Column - Restaurant Info & Verification --------------------------------*/}
+          {/*----------------------------------------------------------------------------------------------------------------
+          ------------------------------------- Left Column - Restaurant Info & Verification --------------------------------
+          -------------------------------------------------------------------------------------------------------------------*/}
           <div className="space-y-6">
+
             {/* Restaurant Header */}
             <div className="flex items-start gap-4">
               <img src={Logo} alt="Raasa Restaurant Logo" />
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-900">Raasa Restaurant</h2>
+                <h2 className="text-xl font-bold text-gray-900">
+                  Raasa Restaurant
+                </h2>
                 <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <UtensilsCrossed className="w-4 h-4" />
+                    <span>{bookingData.table || "Table"}</span>
+                  </div>
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
                     <span>{bookingData.date || "Date"}</span>
@@ -89,56 +118,113 @@ export default function Booking() {
             </div>
 
             {/* Details Section */}
-            <div className="space-y-3">
-              <h3 className="font-semibold text-gray-900">Details</h3>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                Lorem ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took...
-              </p>
-            </div>
-
-            {/* Phone input + Send (always visible) */}
-            <div className="space-y-3">
-              <div className="flex gap-2 items-center">
-                <PhoneInput label="Phone Number" placeholder="Enter your phone number" classNamew="w-full" />
-                <span className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">Send</span>
-              </div>
-              <p className="text-xs text-gray-500">You will receive a text message to verify your account. Message & data rates may apply</p>
-            </div>
-
-            {/* Verification code + Verify button (only when not yet verified) */}
-            {!visibleForm && (
-              <>
-                <div className="flex gap-2 items-center">
-                  <Input type="text" value={verificationCode} onChange={(e) => { setVerificationCode(e.target.value); if (verificationError) setVerificationError(""); }} placeholder="Enter verification code" />
-                  <button type="button" onClick={handleVerify} className="bg-amber-500 hover:bg-amber-600 text-white py-1.5 px-4 rounded-md font-semibold cursor-pointer w-[200px]">Verify</button>
+            {!completeReservation && (
+              <div className="flex flex-col gap-4">
+                <div className="space-y-3">
+                  <h3 className="font-semibold text-gray-900">Details</h3>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    Lorem ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took...
+                  </p>
                 </div>
-                {verificationError && <p className="text-sm text-red-500 mt-1">{verificationError}</p>}
-              </>
+
+                {/* Phone input + Send (always visible) */}
+                <div className="space-y-3">
+                  <div className="flex gap-2 items-center">
+                    <PhoneInput
+                      label="Phone Number"
+                      placeholder="Enter your phone number"
+                    />
+                    <span className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">
+                      Send
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    You will receive a text message to verify your account.
+                    Message & data rates may apply
+                  </p>
+                </div>
+
+                {/* Verification code + Verify button (only when not yet verified) */}
+                {!visibleForm && (
+                  <>
+                    <div className="flex gap-2 items-center">
+                      <Input
+                        type="text"
+                        value={verificationCode}
+                        onChange={(e) => {
+                          setVerificationCode(e.target.value);
+                          if (verificationError) setVerificationError("");
+                        }}
+                        placeholder="Enter verification code"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleVerify}
+                        className="bg-amber-500 hover:bg-amber-600 text-white py-1.5 px-4 rounded-md font-semibold cursor-pointer w-[200px]"
+                      >
+                        Verify
+                      </button>
+                    </div>
+                    {verificationError && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {verificationError}
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
             )}
 
-            {/* Reservation Details (visible after verification) */}
+            {/*--------------------------------------------------------------------------------------------------------------------------------------------------------------
+            -------------------------------------------------------- Reservation Details (visible after verification) -------------------------------------------------------
+            -----------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
             {visibleForm && (
               <div className="max-w-2xl mx-auto">
-                <h3 className="font-semibold text-gray-900 mt-2">Reservation Details</h3>
-                <form onSubmit={handleSubmit} className="space-y-2 grid grid-cols-2 gap-x-2 mt-4">
+                <h3 className="font-semibold text-gray-900 mt-2">
+                  Reservation Details
+                </h3>
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-2 grid grid-cols-2 gap-x-2 mt-4"
+                >
                   <div>
                     <div className="relative">
                       <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <input type="text" name="name" placeholder="Enter your name" value={formData.name} onChange={handleChange} className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
                     </div>
                   </div>
                   <div>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <input type="email" name="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      />
                     </div>
                   </div>
                   <div className="col-span-2">
                     <div className="relative">
                       <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <select name="occasion" value={formData.occasion} onChange={handleChange} className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500">
+                      <select
+                        name="occasion"
+                        value={formData.occasion}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      >
                         <option value="">Select an occasion</option>
                         <option value="birthday">Birthday</option>
                         <option value="anniversary">Anniversary</option>
@@ -151,24 +237,56 @@ export default function Booking() {
                   <div className="col-span-2">
                     <div className="relative">
                       <FileText className="absolute left-3 top-3 w-4 h-4 text-foreground pointer-events-none" />
-                      <textarea name="specialRequest" placeholder="Any special requests or dietary requirements?" value={formData.specialRequest} onChange={handleChange} rows={3} className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none" />
+                      <textarea
+                        name="specialRequest"
+                        placeholder="Any special requests or dietary requirements?"
+                        value={formData.specialRequest}
+                        onChange={handleChange}
+                        rows={3}
+                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                      />
                     </div>
                   </div>
                   <div className="col-span-2">
-                    <button type="submit" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 cursor-pointer transition">Complete Reservation</button>
+                    <button
+                      type="submit"
+                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 cursor-pointer transition"
+                      onClick={handleReservation}
+                    >
+                      Complete Reservation
+                    </button>
                   </div>
                 </form>
-                <p className="text-xs text-muted-foreground mt-6 leading-relaxed">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took</p>
+                <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
+                  Lorem ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took
+                </p>
               </div>
+            )}
+
+            {/*---------------------------------------------------------------------------------------------------------------------------------
+            -------------------------------------------------- Reservation complitation form ---------------------------------------------------
+            ------------------------------------------------------------------------------------------------------------------------------------*/}
+            {completeReservation && (
+              <ReservationCompleteMassege 
+              formData={formData}
+              bookingData={bookingData}
+              />
             )}
           </div>
 
-          {/*----------------------------------------------------- Right Column - Food Image ---------------------------------------------*/}
+          {/*--------------------------------------------------------------------------------------------------------------------------
+          ----------------------------------------------------- Right Column - Food Image ---------------------------------------------
+          -----------------------------------------------------------------------------------------------------------------------------*/}
           <div className="flex">
             <img
-              src={visibleForm ? bookingImage2 : bookingImage}
+              src={visibleForm || completeReservation ? bookingImage2 : bookingImage}
               alt="Raasa Restaurant Dish"
-              className={`w-full h-auto rounded-md object-cover ${visibleForm && 'aspect-square'}`}
+              className={`w-full h-auto rounded-md object-cover ${
+                visibleForm && "aspect-square"
+              }`}
             />
           </div>
         </div>

@@ -3,13 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import map from "@/assets/map.png";
 import { Users, UtensilsCrossed, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function ReservationForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    table: "PS Table 1",
-    people: "2-2 People",
-    date: "2025-10-30",
-    time: "18:00",
+    table: "",
+    people: "",
+    date: "",
+    time: "",
   });
 
   const handleChange = (e) => {
@@ -19,7 +21,8 @@ export default function ReservationForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Reservation submitted:", formData);
+    // Navigate to /booking with state
+    navigate("/booking", { state: formData });
   };
 
   return (
@@ -28,13 +31,13 @@ export default function ReservationForm() {
         <img src={map} alt="Map" />
       </div>
 
-      <Card className="p-6 border border-border mt-8">
-        <h3 className="text-lg font-serif font-bold text-foreground mb-6">
+      <Card className="p-6 border border-border mt-4">
+        <h3 className="text-lg font-serif font-bold text-foreground">
           Make a reservation
         </h3>
 
-        <form className="space-y-4">
-          {/* Table and People Selection */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Table */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -45,17 +48,20 @@ export default function ReservationForm() {
                 <select
                   name="table"
                   value={formData.table}
+                  required
                   onChange={handleChange}
                   className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
                 >
-                  <option>PS Table 1</option>
-                  <option>PS Table 2</option>
-                  <option>PS Table 3</option>
+                  <option value="">Select a table</option>
+                  <option value="PS Table 1">PS Table 1</option>
+                  <option value="PS Table 2">PS Table 2</option>
+                  <option value="PS Table 3">PS Table 3</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
             </div>
 
+            {/* People */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Peoples Count
@@ -66,11 +72,13 @@ export default function ReservationForm() {
                   name="people"
                   value={formData.people}
                   onChange={handleChange}
+                  required
                   className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
                 >
-                  <option>2-2 People</option>
-                  <option>4-4 People</option>
-                  <option>6-6 People</option>
+                  <option value="">Select people count</option>
+                  <option value="2-2 People">2-2 People</option>
+                  <option value="4-4 People">4-4 People</option>
+                  <option value="6-6 People">6-6 People</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
@@ -88,6 +96,8 @@ export default function ReservationForm() {
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
+                required
+                placeholder="Select date"
                 className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               />
             </div>
@@ -101,20 +111,19 @@ export default function ReservationForm() {
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
+                required
+                placeholder="Select time"
                 className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
               />
             </div>
           </div>
 
-          {/* Navigation Button */}
-          <a href="/booking">
-            <Button
-              type="button"
-              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
-            >
-              Book Now
-            </Button>
-          </a>
+          <Button
+            type="submit" // must be submit
+            className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
+          >
+            Book Now
+          </Button>
         </form>
       </Card>
     </div>
