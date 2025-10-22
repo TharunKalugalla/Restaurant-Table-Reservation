@@ -87,7 +87,7 @@ export default function PhotoGallery() {
                   className="absolute inset-0 bg-black/50 flex items-center justify-center"
                   onClick={(e) => {
                     e.stopPropagation();
-                    openMore();
+                    openAt(i);
                   }}
                 >
                   <span className="text-white text-xl font-semibold">
@@ -119,7 +119,7 @@ export default function PhotoGallery() {
             <X className="h-8 w-8" />
           </button>
 
-          {/* Left Arrow */}
+          {/*----------------------------------------------- Left Arrow ----------------------------------------------------*/}
           <button
             onClick={(e) => {
               e.stopPropagation();

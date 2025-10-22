@@ -5,11 +5,11 @@ export default function MenuItem() {
   const BASE_IMAGE_URL = "/src/assets/menu_image/";
 
   const allPhotos = [
-    { id: 1, name: "1.png", large: true },
+    { id: 1, name: "1.png" },
     { id: 2, name: "2.png" },
     { id: 3, name: "3.png" },
     { id: 4, name: "4.png" },
-    { id: 5, name: "5.png", hasMore: true },
+    { id: 5, name: "5.png" },
   ];
 
   const displayPhotos = allPhotos.slice(0, 5);
@@ -82,12 +82,12 @@ export default function MenuItem() {
                 alt={`Menu photo ${photo.id}`}
                 className="w-full h-full object-cover"
               />
-              {photo.hasMore && (
+              {photo.id === 5 && (
                 <div
                   className="absolute inset-0 bg-black/50 flex items-center justify-center"
                   onClick={(e) => {
                     e.stopPropagation();
-                    openMore();
+                    openAt(i);
                   }}
                 >
                   <span className="text-white text-xl font-semibold">
@@ -119,7 +119,7 @@ export default function MenuItem() {
             <X className="h-8 w-8" />
           </button>
 
-          {/* Left arrow */}
+          {/*-------------------------------------------------- Left arrow -------------------------------------------------*/}
           <button
             onClick={(e) => {
               e.stopPropagation();
