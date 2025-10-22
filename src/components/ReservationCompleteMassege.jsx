@@ -6,13 +6,13 @@ import reservationCompleteImage from "@/assets/Reservation_complitation.png";
 export default function ReservationCompleteMassege({ formData, bookingData }) {
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Header */}
+      {/*---------------------------------------------------- Header ---------------------------------------------------*/}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-serif font-bold text-foreground mb-6">
           Thank you For Choosing Us!
         </h1>
 
-        {/* Booking Details */}
+        {/*---------------------------------------------- Booking Details ------------------------------------------------*/}
         <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <UtensilsCrossed className="w-4 h-4" />
@@ -33,7 +33,7 @@ export default function ReservationCompleteMassege({ formData, bookingData }) {
         </div>
       </div>
 
-      {/* Food Image */}
+      {/*------------------------------------------------------- Food Image --------------------------------------------------*/}
       <div className="mb-8 items-center flex justify-center">
         <img
           src={reservationCompleteImage}
@@ -42,7 +42,7 @@ export default function ReservationCompleteMassege({ formData, bookingData }) {
         />
       </div>
 
-      {/* Action Buttons */}
+      {/*----------------------------------------------------- Action Buttons -------------------------------------------------*/}
       <div className="flex flex-col gap-y-1 mb-8">
         <a href="/">
           <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-md transition cursor-pointer">
@@ -55,7 +55,7 @@ export default function ReservationCompleteMassege({ formData, bookingData }) {
         </Button>
       </div>
 
-      {/* Footer Text */}
+      {/*--------------------------------------------------------- Footer Text -------------------------------------------------*/}
       <p className="text-sm text-muted-foreground text-center leading-relaxed">
         Lorem ipsum is simply dummy text of the printing and typesetting
         industry. Lorem ipsum has been the industry's standard dummy text ever
