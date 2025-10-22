@@ -81,7 +81,7 @@ export default function Booking() {
           <div className="space-y-6">
 
             {/* Restaurant Header */}
-            <div className="flex items-start gap-4">
+            <div className="flex items-end gap-4">
               <img src={Logo} alt="Raasa Restaurant Logo" />
               <div className="flex-1">
                 <h2 className="text-xl font-bold text-gray-900">
