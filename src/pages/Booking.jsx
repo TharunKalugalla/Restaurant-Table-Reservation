@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Logo from "@/assets/rasa_logo.png";
 import {
@@ -14,7 +14,6 @@ import { PhoneInput } from "@/components/ui/phone-input";
 import bookingImage from "@/assets/booking.png";
 import bookingImage2 from "@/assets/reservation_image.png";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import ReservationCompleteMassege from "@/components/ReservationCompleteMassege";
 
 export default function Booking() {
@@ -24,12 +23,17 @@ export default function Booking() {
   const [visibleForm, setVisibleForm] = useState(false);
   const [completeReservation, setCompleteReservation] = useState(false);
   const [verificationError, setVerificationError] = useState("");
+  const { pathname } = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     occasion: "",
     specialRequest: "",
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname])
 
   console.log("Received bookingData:", bookingData);
   

@@ -31,7 +31,7 @@ export default function Home() {
       </div>
 
       {/*---------------------------------------------------------- Body Section ---------------------------------------------------*/}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_400px] max-w-6xl w-full mt-8 mx-auto mb-4 p-4 lg:p-0 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_400px] max-w-6xl w-full mt-8 mx-auto mb-10 p-4 lg:p-0 gap-10">
         
         {/*-------------------------------------------------------------------------------------------------------------------------
         ------------------------------------------------- Left: Scrollable Content -------------------------------------------------

@@ -9,19 +9,18 @@ import {
 } from "@/components/ui/carousel";
 
 export default function Reviews() {
-  // Example reviews with decimal ratings
   const reviews = [
     { id: 1, author: "Mr. Jain", rating: 5, text: "Amazing food and service!" },
     { id: 2, author: "Ms. Patel", rating: 4.5, text: "Great food and ambiance." },
     { id: 3, author: "Mr. Fernando", rating: 3.5, text: "Average experience overall." },
     { id: 4, author: "Ms. Silva", rating: 2.5, text: "Food was okay, could improve." },
+    { id: 5, author: "Ms. Saman", rating: 5, text: "Excellent food and service!" },
   ];
 
-  // Calculate average rating
-  const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+  const averageRating =
+    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
   const totalRatings = reviews.length;
 
-  // Count ratings by integer part
   const ratingCounts = [1, 2, 3, 4, 5].reduce((acc, rating) => {
     acc[rating] = reviews.filter(
       (r) => Math.round(r.rating) === rating
@@ -29,7 +28,6 @@ export default function Reviews() {
     return acc;
   }, {});
 
-  // Utility: render stars (with half support)
   const renderStars = (rating, size = "w-4 h-4") => {
     const full = Math.floor(rating);
     const half = rating % 1 >= 0.5;
@@ -38,7 +36,10 @@ export default function Reviews() {
     return (
       <div className="flex items-center">
         {Array.from({ length: full }).map((_, i) => (
-          <Star key={`f-${i}`} className={`${size} fill-amber-500 text-amber-500`} />
+          <Star
+            key={`f-${i}`}
+            className={`${size} fill-amber-500 text-amber-500`}
+          />
         ))}
         {half && (
           <div className="relative">
@@ -57,14 +58,18 @@ export default function Reviews() {
   };
 
   return (
-    <div id="review">
-      {/* Heading */}
-      <h2 className="text-2xl font-serif font-bold text-foreground mb-4">Reviews</h2>
-      <p className="text-sm mb-6 text-justify text-muted-foreground">
+    <div id="review" className="w-full">
+      {/*------------------------------------------------------- Heading ---------------------------------------------------------*/}
+      <h2 className="text-2xl font-serif font-bold text-foreground mb-3">
+        Reviews
+      </h2>
+      <p className="text-sm mb-6 text-muted-foreground">
         Hear what our customers have to say about Raasa Restaurant.
       </p>
 
-      {/* Review Carousel */}
+      {/*-----------------------------------------------------------------------------------------------------------------------
+      ------------------------------------------------------ Review Carousel ---------------------------------------------------
+      --------------------------------------------------------------------------------------------------------------------------*/}
       <div className="w-full mb-8">
         <Carousel className="w-full">
           <CarouselContent>
@@ -90,32 +95,46 @@ export default function Reviews() {
         </Carousel>
       </div>
 
-      {/* Rating Summary */}
-      <div className="flex items-end gap-8 flex-wrap">
-        {/* Average Rating */}
-        <div>
-          <div className="text-5xl font-serif font-bold text-foreground flex items-end gap-1 mb-2">
-            <span>{averageRating.toFixed(1)}</span>
-            <div className="text-xl text-muted-foreground">/5</div>
+      {/*----------------------------------------------------------------------------------------------------------------------
+      ------------------------------------------------------------ Rating Summary ---------------------------------------------
+      -------------------------------------------------------------------------------------------------------------------------*/}
+      <div className="flex flex-wrap items-end gap-8">
+        {/*--------------------------------------------------------- Average Rating ----------------------------------------------*/}
+        <div className="min-w-[120px]">
+          <div className="flex items-end gap-1 mb-1">
+            <span className="text-5xl font-serif font-bold text-foreground">
+              {averageRating.toFixed(1)}
+            </span>
+            <span className="text-lg text-muted-foreground">/5</span>
           </div>
           {renderStars(averageRating)}
-          <p className="text-xs text-muted-foreground mt-2">{totalRatings} Ratings</p>
+          <p className="text-xs text-muted-foreground mt-2">
+            {totalRatings} Ratings
+          </p>
         </div>
 
-        {/* Rating Distribution */}
-        <div className="flex-1 space-y-2 min-w-[200px]">
+        {/*------------------------------------------------------ Rating Distribution ---------------------------------------------*/}
+        <div className="flex-1 space-y-2 max-w-[450px]">
           {[5, 4, 3, 2, 1].map((rating) => {
             const count = ratingCounts[rating] || 0;
             const percent = (count / totalRatings) * 100 || 0;
+
             return (
-              <div key={rating} className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground w-4">{rating}</span>
+              <div key={rating} className="flex items-center gap-3">
+                <div className="flex items-center gap-1 w-24">
+                  <span className="text-xs text-muted-foreground font-medium">
+                    {rating}
+                  </span>
+                  {renderStars(rating, "w-3 h-3")}
+                </div>
+
                 <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-amber-500"
+                    className="h-full bg-amber-500 transition-all duration-500 ease-in-out"
                     style={{ width: `${percent}%` }}
                   />
                 </div>
+
                 <span className="text-xs text-muted-foreground w-6 text-right">
                   {count}
                 </span>

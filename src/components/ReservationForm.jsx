@@ -32,7 +32,7 @@ export default function ReservationForm() {
       </div>
 
       <Card className="p-6 border border-border mt-4">
-        <h3 className="text-lg font-serif font-bold text-foreground">
+        <h3 className="text-lg font-serif font-bold text-foreground text-center">
           Make a reservation
         </h3>
 
