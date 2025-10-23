@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 
 * {
-  font-family: 'Poppins' ;
+  font-family: 'poppins' ;
 }
 
 @custom-variant dark (&:is(.dark *));
