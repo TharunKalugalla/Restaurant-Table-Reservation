@@ -9,7 +9,7 @@ const Layout = () => {
       <Navigation />
       <main className="max-w-[1440px] mx-auto">
         <Outlet />
-        <Footer />
+        {/* <Footer /> */}
       </main>
     </div>
   );

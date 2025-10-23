@@ -10,6 +10,7 @@ export default function MenuItem() {
     { id: 3, name: "3.png" },
     { id: 4, name: "4.png" },
     { id: 5, name: "5.png" },
+    { id: 6, name: "6.png" },
   ];
 
   const displayPhotos = allPhotos.slice(0, 5);
@@ -66,13 +67,13 @@ export default function MenuItem() {
         <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
           Menu
         </h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2">
           {displayPhotos.map((photo, i) => (
             <div
               key={photo.id}
               className={`${
                 i === 0 ? "row-span-2" : ""
-              } bg-muted rounded-xl overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer relative`}
+              } bg-muted rounded-sm overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer relative`}
               onClick={() => openAt(i)}
             >
               <img
@@ -150,10 +151,10 @@ export default function MenuItem() {
               <img
                 src={
                   imgErrorMap[photos[index].id]
-                    ? "/placeholder.svg"
+                    ? "/placeholder.png"
                     : photos[index].name
                     ? BASE_IMAGE_URL + photos[index].name
-                    : "/placeholder.svg"
+                    : "/placeholder.png"
                 }
                 alt={`Menu image ${photos[index].id}`}
                 onError={() => handleImgError(photos[index].id)}

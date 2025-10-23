@@ -31,12 +31,12 @@ export default function Home() {
       </div>
 
       {/*---------------------------------------------------------- Body Section ---------------------------------------------------*/}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_400px] max-w-6xl w-full mt-8 mx-auto mb-10 p-4 lg:p-0 gap-10">
+      <div className="max-w-6xl w-full mx-auto mt-8 mb-10 px-4 xl:px-0 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-10">
         
         {/*-------------------------------------------------------------------------------------------------------------------------
         ------------------------------------------------- Left: Scrollable Content -------------------------------------------------
         ----------------------------------------------------------------------------------------------------------------------------*/}
-        <div className="flex flex-col">
+        <div className="order-2 md:order-1 flex flex-col min-w-0">
           <div className="mb-4">
             <img src={Logo} alt="Raasa Restaurant Logo" className="w-40 mb-2" />
             <h1 className="text-4xl font-bold text-foreground mb-2 font-[Inter]">
@@ -51,7 +51,7 @@ export default function Home() {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-8 border-b border-border sticky top-0 bg-white pt-4 z-10">
+            <div className="flex gap-8 border-b border-border sticky top-0 bg-white pt-4 z-20">
               <button
                 className={`pb-3 font-medium transition-all ${
                   activeTab === "photos"
@@ -109,11 +109,9 @@ export default function Home() {
         {/*------------------------------------------------------------------------------------------------------------------------
         ------------------------------------------------- Right: Sticky Reservation Form ------------------------------------------
         ---------------------------------------------------------------------------------------------------------------------------*/}
-        <div className="relative">
-          <div className="sticky top-4">
+          <div className="order-1 md:order-2 h-fit md:sticky md:top-0 md:self-start">
             <ReservationForm />
           </div>
-        </div>
       </div>
     </div>
   );

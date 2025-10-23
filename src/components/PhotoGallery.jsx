@@ -10,6 +10,7 @@ export default function PhotoGallery() {
     { id: 3, name: "3.png" },
     { id: 4, name: "4.png" },
     { id: 5, name: "5.png" },
+    { id: 6, name: "6.png" },
   ];
 
   const displayPhotos = allPhotos.slice(0, 5);
@@ -21,12 +22,6 @@ export default function PhotoGallery() {
 
   const openAt = (i) => {
     setIndex(i);
-    setPhotos(allPhotos);
-    setIsOpen(true);
-  };
-
-  const openMore = () => {
-    setIndex(5);
     setPhotos(allPhotos);
     setIsOpen(true);
   };
@@ -66,13 +61,13 @@ export default function PhotoGallery() {
         <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
           Photos
         </h2>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2">
           {displayPhotos.map((photo, i) => (
             <div
               key={photo.id}
               className={`${
                 i === 0 ? "row-span-2" : ""
-              } bg-muted rounded-xl overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer relative`}
+              } bg-muted rounded-sm overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer relative`}
               onClick={() => openAt(i)}
             >
               <img
@@ -114,7 +109,7 @@ export default function PhotoGallery() {
               e.stopPropagation();
               close();
             }}
-            className="absolute top-6 right-6 text-white opacity-90 hover:opacity-100 transition p-2 rounded"
+            className="absolute top-6 right-6 text-white opacity-90 hover:opacity-100 transition p-2 rounded z-50"
           >
             <X className="h-8 w-8" />
           </button>
@@ -125,7 +120,7 @@ export default function PhotoGallery() {
               e.stopPropagation();
               prev();
             }}
-            className="absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
+            className="absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 hover:bg-white/20 flex items-center justify-center z-50"
           >
             <ChevronLeft className="h-6 w-6 text-white" />
           </button>
@@ -136,7 +131,7 @@ export default function PhotoGallery() {
               e.stopPropagation();
               next();
             }}
-            className="absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center"
+            className="absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 hover:bg-white/20 flex items-center justify-center z-50"
           >
             <ChevronRight className="h-6 w-6 text-white" />
           </button>
@@ -150,10 +145,10 @@ export default function PhotoGallery() {
               <img
                 src={
                   imgErrorMap[photos[index].id]
-                    ? "/placeholder.svg"
+                    ? "/placeholder.png"
                     : photos[index].name
                     ? BASE_IMAGE_URL + photos[index].name
-                    : "/placeholder.svg"
+                    : "/placeholder.png"
                 }
                 alt={`Preview ${photos[index].id}`}
                 onError={() => handleImgError(photos[index].id)}
