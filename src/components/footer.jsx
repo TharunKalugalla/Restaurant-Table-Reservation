@@ -13,7 +13,7 @@ export default function Footer() {
     <footer className="bg-foreground text-background">
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
         {/* Footer Content */}
-        <div className="grid grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 text-center">
           <div>
             <h4 className="font-semibold mb-4">About Sephora</h4>
             <ul className="space-y-2 text-sm">
@@ -181,8 +181,8 @@ export default function Footer() {
 
         {/* Newsletter and Social */}
         <div className="border-t border-background/20 pt-8">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex gap-x-4 items-center">
+          <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-x-4 items-center">
               <span>Sign up for Sephora Emails</span>
               <div className="flex items-center gap-2">
                 <input
