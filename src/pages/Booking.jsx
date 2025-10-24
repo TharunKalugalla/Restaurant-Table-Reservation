@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Logo from "@/assets/rasa_logo.png";
-import {
-  Calendar,
-  Clock,
-  FileText,
-  Mail,
-  User,
-  Users,
-  UtensilsCrossed,
-} from "lucide-react";
+import { Calendar, Clock, FileText, Mail, User, Users, UtensilsCrossed } from "lucide-react";
 import { PhoneInput } from "@/components/ui/phone-input";
 import bookingImage from "@/assets/booking.png";
 import bookingImage2 from "@/assets/reservation_image.png";
 import { Input } from "@/components/ui/input";
 import ReservationCompleteMassege from "@/components/ReservationCompleteMassege";
+import axios from "axios";
 
 export default function Booking() {
-  const [verificationCode, setVerificationCode] = useState("");
   const location = useLocation();
   const bookingData = location.state || {};
   const [visibleForm, setVisibleForm] = useState(false);
@@ -28,43 +20,117 @@ export default function Booking() {
     name: "",
     email: "",
     occasion: "",
-    specialRequest: "",
+    specialRequirements: "",
+    tableNumber: bookingData.table,
+    peopleCount: bookingData.people,
+    date: bookingData.date,
+    time: bookingData.time,
   });
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname])
+  }, [pathname]);
 
-  console.log("Received bookingData:", bookingData);
-  
+  //send OTP
+  const sendOtp = async () => {
+    setError("");
+    try {
+      const res = await axios.post("http://localhost:3200/api/booking/send", { phoneNumber });
+      if (res.data.success) {
+        alert("OTP Sent Successfully!");
+      } else {
+        setError(res.data.message);
+      }
+    } catch (error) {
+      setError("Faild to send OTP");
+      console.error(error);
+    }
+  }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleVerify = () => {
-    // Simple verification example: code must be "1234"
-    if (verificationCode.trim() === "1234") {
-      setVerificationError("");
-      setVisibleForm(true);
-    } else {
+  //verify OTP
+  const verifyOtp = async () => {
+    setError("");
+    try {
+      const res = await axios.post("http://localhost:3200/api/booking/verify", {
+        phoneNumber,
+        verificationCode: otp,
+      });
+      if (res.data.success) {
+        alert("OTP verified Successfully!");
+        setVisibleForm(true);
+      } else {
+        setError("Invalid or Expired OTP");
+      }
+    } catch (err) {
+      console.log(err);
+      setError("Invalid or expired OTP");
       setVerificationError(
-        "Invalid verification code. Please try 1234 for demo."
+        "Invalid verification code. Please try Check"
       );
+    }
+  }
+
+  //create booking
+  // const createBooking = async () => {
+  //   try {
+  //     const res = await axios.post("http://localhost:3200/api/booking", {
+  //       phoneNumber,
+  //       ...formData,
+  //     });
+  //     alert(res.data.message);
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Booking faild");
+  //   }
+  // };
+
+  const createBooking = async () => {
+    try {
+      const res = await axios.post("http://localhost:3200/api/booking", {
+        phoneNumber,
+        ...formData,
+      });
+      alert(res.data.message);
       setVisibleForm(false);
+      setCompleteReservation(true);
+    } catch (err) {
+      console.error(err);
+      alert("Booking failed!");
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reservation details submitted:", formData);
-  };
 
-  const handleReservation = () => {
-    setVisibleForm(false);
-    setCompleteReservation(true);
-  };
+  console.log("Received bookingData:", bookingData);
+
+
+
+
+  // const handleVerify = () => {
+  //   // Simple verification example: code must be "1234"
+  //   if (verificationCode.trim() === "1234") {
+  //     setVerificationError("");
+  //     setVisibleForm(true);
+  //   } else {
+  //     setVerificationError(
+  //       "Invalid verification code. Please try 1234 for demo."
+  //     );
+  //     setVisibleForm(false);
+  //   }
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Reservation details submitted:", formData);
+  // };
+
+  // const handleReservation = () => {
+  //   setVisibleForm(false);
+  //   setCompleteReservation(true);
+  // };
 
   return (
     <div className="mx-auto mt-4">
@@ -138,10 +204,12 @@ export default function Booking() {
                 <div className="space-y-3">
                   <div className="flex gap-2 items-center">
                     <PhoneInput
+                      value={phoneNumber}
+                      onChange={(value) => setPhoneNumber(value)}
                       label="Phone Number"
                       placeholder="Enter your phone number"
                     />
-                    <span className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">
+                    <span onClick={sendOtp} className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">
                       Send
                     </span>
                   </div>
@@ -157,16 +225,13 @@ export default function Booking() {
                     <div className="flex gap-2 items-center">
                       <Input
                         type="text"
-                        value={verificationCode}
-                        onChange={(e) => {
-                          setVerificationCode(e.target.value);
-                          if (verificationError) setVerificationError("");
-                        }}
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
                         placeholder="Enter verification code"
                       />
                       <button
                         type="button"
-                        onClick={handleVerify}
+                        onClick={verifyOtp}
                         className="bg-amber-500 hover:bg-amber-600 text-white py-1.5 px-4 rounded-md font-semibold cursor-pointer w-[200px]"
                       >
                         Verify
@@ -190,77 +255,36 @@ export default function Booking() {
                 <h3 className="font-semibold text-gray-900 mt-2">
                   Reservation Details
                 </h3>
-                <form
-                  onSubmit={handleSubmit}
-                  className="space-y-2 grid grid-cols-2 gap-x-2 mt-4"
-                >
-                  <div>
-                    <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Enter your name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <input
-                        type="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-span-2">
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
-                      <select
-                        name="occasion"
-                        value={formData.occasion}
-                        onChange={handleChange}
-                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-amber-500"
-                      >
-                        <option value="">Select an occasion</option>
-                        <option value="birthday">Birthday</option>
-                        <option value="anniversary">Anniversary</option>
-                        <option value="business">Business Meeting</option>
-                        <option value="casual">Casual Dining</option>
-                        <option value="special">Special Celebration</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-span-2">
-                    <div className="relative">
-                      <FileText className="absolute left-3 top-3 w-4 h-4 text-foreground pointer-events-none" />
-                      <textarea
-                        name="specialRequest"
-                        placeholder="Any special requests or dietary requirements?"
-                        value={formData.specialRequest}
-                        onChange={handleChange}
-                        rows={3}
-                        className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-span-2">
-                    <button
-                      type="submit"
-                      className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 cursor-pointer transition"
-                      onClick={handleReservation}
-                    >
-                      Complete Reservation
-                    </button>
-                  </div>
-                </form>
+                <div>
+                  <input
+                    placeholder="Name"
+                    className="border p-2 w-full rounded mb-3"
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  /> <br />
+                  <input
+                    placeholder="Email"
+                    className="border p-2 w-full rounded mb-3"
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  /> <br />
+                  <input
+                    placeholder="Occasion"
+                    className="border p-2 w-full rounded mb-3"
+                    onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
+                  /> <br />
+                  <input
+                    placeholder="Special Requirements"
+                    className="border p-2 w-full rounded mb-3"
+                    onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
+                  /> <br />
+                  <button
+                    onClick={createBooking}
+                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                  >
+                    Book Table
+                  </button>
+
+                </div>
+
                 <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
                   Lorem ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem ipsum has been the industry's
@@ -274,9 +298,9 @@ export default function Booking() {
             -------------------------------------------------- Reservation complitation form ---------------------------------------------------
             ------------------------------------------------------------------------------------------------------------------------------------*/}
             {completeReservation && (
-              <ReservationCompleteMassege 
-              formData={formData}
-              bookingData={bookingData}
+              <ReservationCompleteMassege
+                formData={formData}
+                bookingData={bookingData}
               />
             )}
           </div>
@@ -288,9 +312,8 @@ export default function Booking() {
             <img
               src={visibleForm || completeReservation ? bookingImage2 : bookingImage}
               alt="Raasa Restaurant Dish"
-              className={`w-full h-auto rounded-md object-cover ${
-                visibleForm && "aspect-square"
-              }`}
+              className={`w-full h-auto rounded-md object-cover ${visibleForm && "aspect-square"
+                }`}
             />
           </div>
         </div>
