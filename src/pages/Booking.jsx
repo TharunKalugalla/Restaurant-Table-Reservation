@@ -34,6 +34,7 @@ export default function Booking() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
 
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function Booking() {
             background: "#E39F00",
           },
         });
+        setOtpSent(true);
       } else {
         setError(res.data.message);
       }
@@ -239,7 +241,7 @@ export default function Booking() {
                 </div>
 
                 {/* Verification code + Verify button (only when not yet verified) */}
-                {!visibleForm && (
+                {otpSent && !visibleForm && (
                   <>
                     <div className="flex gap-2 items-center">
                       <Input
