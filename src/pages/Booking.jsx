@@ -8,6 +8,9 @@ import bookingImage2 from "@/assets/reservation_image.png";
 import { Input } from "@/components/ui/input";
 import ReservationCompleteMassege from "@/components/ReservationCompleteMassege";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function Booking() {
   const location = useLocation();
@@ -30,6 +33,8 @@ export default function Booking() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,10 +43,19 @@ export default function Booking() {
   //send OTP
   const sendOtp = async () => {
     setError("");
+    setLoading(true);
     try {
       const res = await axios.post("http://localhost:3200/api/booking/send", { phoneNumber });
       if (res.data.success) {
-        alert("OTP Sent Successfully!");
+        toast.success("OTP Sent Successfully!", {
+          style: {
+            background: "#ffff",
+            color: "#464545",
+          },
+          progressStyle: {
+            background: "#E39F00",
+          },
+        });
       } else {
         setError(res.data.message);
       }
@@ -209,9 +223,14 @@ export default function Booking() {
                       label="Phone Number"
                       placeholder="Enter your phone number"
                     />
-                    <span onClick={sendOtp} className="text-amber-500 hover:text-amber-600 font-semibold cursor-pointer">
-                      Send
+                    <span
+                      onClick={!loading ? sendOtp : null}
+                      className={`font-semibold cursor-pointer 
+    ${loading ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
+                    >
+                      {loading ? "Sending..." : "Send"}
                     </span>
+
                   </div>
                   <p className="text-xs text-gray-500">
                     You will receive a text message to verify your account.
@@ -305,6 +324,7 @@ export default function Booking() {
             )}
           </div>
 
+
           {/*--------------------------------------------------------------------------------------------------------------------------
           ----------------------------------------------------- Right Column - Food Image ---------------------------------------------
           -----------------------------------------------------------------------------------------------------------------------------*/}
@@ -318,6 +338,7 @@ export default function Booking() {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 }
