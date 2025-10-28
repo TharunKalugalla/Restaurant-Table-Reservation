@@ -49,20 +49,30 @@ export default function Booking() {
       if (res.data.success) {
         toast.success("OTP Sent Successfully!", {
           style: {
-            background: "#ffff",
+            background: "#ffffff",
             color: "#464545",
           },
           progressStyle: {
-            background: "#E39F00",
+            background: "#E39F00 !important",
           },
         });
+
       } else {
         setError(res.data.message);
       }
     } catch (error) {
-      setError("Faild to send OTP");
+      toast.success("Faild to send OTP", {
+        style: {
+          background: "#ffffff",
+          color: "#464545",
+        },
+        progressStyle: {
+          background: "#E39F00 !important",
+        },
+      });
       console.error(error);
     }
+    setLoading(false);
   }
 
   //verify OTP
@@ -74,7 +84,15 @@ export default function Booking() {
         verificationCode: otp,
       });
       if (res.data.success) {
-        alert("OTP verified Successfully!");
+        toast.success("OTP verified Successfully!", {
+          style: {
+            background: "#ffffff",
+            color: "#464545",
+          },
+          progressStyle: {
+            background: "#E39F00 !important",
+          },
+        });
         setVisibleForm(true);
       } else {
         setError("Invalid or Expired OTP");
@@ -108,7 +126,17 @@ export default function Booking() {
         phoneNumber,
         ...formData,
       });
-      alert(res.data.message);
+      if (res.data.message) {
+        toast.success("Booking Created Successfullly. Waiting to admin!", {
+          style: {
+            background: "#ffffff",
+            color: "#464545",
+          },
+          progressStyle: {
+            background: "#E39F00 !important",
+          },
+        });
+      }
       setVisibleForm(false);
       setCompleteReservation(true);
     } catch (err) {
@@ -226,7 +254,7 @@ export default function Booking() {
                     <span
                       onClick={!loading ? sendOtp : null}
                       className={`font-semibold cursor-pointer 
-    ${loading ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
+                        ${loading ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
                     >
                       {loading ? "Sending..." : "Send"}
                     </span>
@@ -277,30 +305,41 @@ export default function Booking() {
                 <div>
                   <input
                     placeholder="Name"
-                    className="border p-2 w-full rounded mb-3"
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   /> <br />
                   <input
                     placeholder="Email"
-                    className="border p-2 w-full rounded mb-3"
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   /> <br />
-                  <input
-                    placeholder="Occasion"
-                    className="border p-2 w-full rounded mb-3"
-                    onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-                  /> <br />
+                  <select
+  name="occasion"
+  value={formData.occasion}
+  onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
+  required
+  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3 appearance-none"
+>
+  <option value="">Select Occasion</option>
+  <option value="Birthday">Birthday</option>
+  <option value="Wedding">Wedding</option>
+  <option value="Anniversary">Anniversary</option>
+  <option value="Corporate Event">Corporate Event</option>
+  <option value="Other">Other</option>
+</select>
+ <br />
                   <input
                     placeholder="Special Requirements"
-                    className="border p-2 w-full rounded mb-3"
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
                   /> <br />
                   <button
                     onClick={createBooking}
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer mt-5"
                   >
                     Book Table
                   </button>
+                  
 
                 </div>
 
