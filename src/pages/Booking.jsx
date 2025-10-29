@@ -38,6 +38,8 @@ export default function Booking() {
   const [sent, setSent] = useState(false);
   const [bookingLoading, setBookingLoading] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -48,7 +50,7 @@ export default function Booking() {
     setLoading(true);
     setSent(false);
     try {
-      const res = await axios.post("http://localhost:3200/api/booking/send", { phoneNumber });
+      const res = await axios.post(`${API_URL}/booking/send`, { phoneNumber });
       if (res.data.success) {
         toast.success("OTP Sent Successfully!", {
           style: {
@@ -79,7 +81,7 @@ export default function Booking() {
   const verifyOtp = async () => {
     setError("");
     try {
-      const res = await axios.post("http://localhost:3200/api/booking/verify", {
+      const res = await axios.post(`${API_URL}/booking/verify`, {
         phoneNumber,
         verificationCode: otp,
       });
@@ -125,7 +127,7 @@ export default function Booking() {
   const createBooking = async () => {
     setBookingLoading(true);
     try {
-      const res = await axios.post("http://localhost:3200/api/booking", {
+      const res = await axios.post(`${API_URL}/booking`, {
         phoneNumber,
         ...formData,
       });

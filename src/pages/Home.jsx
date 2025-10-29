@@ -22,11 +22,11 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full mx-auto bg-white mt-4">
       {/*------------------------------------------------------ Banner ----------------------------------------------------------*/}
-      <div className="rounded-lg flex w-fit mx-auto my-auto">
+      <div className="rounded-lg flex w-full h-[400px] mx-auto my-auto">
         <img
           src={coverImage}
           alt="Restaurant floor plan"
-          className="w-full object-cover"
+          className="w-full object-cover h-full"
         />
       </div>
 
