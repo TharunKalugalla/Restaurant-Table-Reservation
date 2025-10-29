@@ -1,35 +1,33 @@
-name: Deploy Vite React App to AWS EC2
+name: Deploy React App to EC2
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install dependencies and build app
-        run: |
-          npm ci
-          npm run build
+      - name: Build React app
+        run: npm run build
 
-      - name: Verify build output
-        run: ls -la dist
+      - name: Verify build folder
+        run: ls -la build
 
       - name: Deploy to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
+          username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "dist/*"
+          source: "build/*"
           target: "/var/www/html"
+          port: 22
