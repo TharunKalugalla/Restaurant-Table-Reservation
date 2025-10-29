@@ -1,4 +1,4 @@
-name: Deploy React App to EC2
+name: Deploy React App to AWS EC2
 
 on:
   push:
@@ -10,24 +10,46 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Step 4: Build React app
       - name: Build React app
         run: npm run build
 
+      # Step 5: Verify build folder
       - name: Verify build folder
         run: ls -la build
 
-      - name: Deploy to EC2
+      # Step 6: Deploy files to EC2
+      - name: Copy files to EC2 via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ec2-user
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
           source: "build/*"
           target: "/var/www/html"
+
+      # Step 7: Restart Nginx (optional)
+      - name: Restart Nginx on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
+          script: |
+            sudo systemctl restart nginx
