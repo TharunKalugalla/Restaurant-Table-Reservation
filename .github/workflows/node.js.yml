@@ -3,20 +3,20 @@ name: Deploy Vite React App to AWS EC2
 on:
   push:
     branches:
-      - main  # or your deployment branch
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout your repository code
+      # 1️⃣ Checkout code
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2️⃣ Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -24,11 +24,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Build the Vite project
+      # 4️⃣ Build Vite project
       - name: Build project
         run: npm run build
 
-      # 5️⃣ Verify build output (Vite uses `dist/`, not `build/`)
+      # 5️⃣ Verify dist folder exists
       - name: Verify build folder
         run: ls -la dist
 
@@ -37,17 +37,24 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
+          username: ubuntu              # Use 'ec2-user' if you're on Amazon Linux
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "dist/*"
           target: "/var/www/html"
+          port: 22
+          timeout: 120s
+          overwrite: true               # Replace existing files
+          rm: true                      # Remove files not in dist/
 
-      # 7️⃣ (Optional) Restart Nginx on EC2 if needed
+      # 7️⃣ Restart Nginx to apply new build
       - name: Restart Nginx
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          timeout: 120s
           script: |
             sudo systemctl restart nginx
+            echo "✅ Nginx restarted successfully"
