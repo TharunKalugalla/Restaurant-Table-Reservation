@@ -35,7 +35,8 @@ export default function Booking() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
-
+  const [sent, setSent] = useState(false);
+  const [bookingLoading, setBookingLoading] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,6 +46,7 @@ export default function Booking() {
   const sendOtp = async () => {
     setError("");
     setLoading(true);
+    setSent(false);
     try {
       const res = await axios.post("http://localhost:3200/api/booking/send", { phoneNumber });
       if (res.data.success) {
@@ -57,9 +59,16 @@ export default function Booking() {
             background: "#E39F00 !important",
           },
         });
+        setTimeout(() => {
+          setSent(true);
+          setLoading(false);
+        }, 4000);
+        setOtpSent(true);
       } else {
         setError(res.data.message);
       }
+
+      sent(true);
     } catch (error) {
       toast.success("Faild to send OTP", {
         style: {
@@ -86,14 +95,16 @@ export default function Booking() {
       if (res.data.success) {
         toast.success("OTP verified Successfully!", {
           style: {
-            background: "#ffffff",
+            background: "#ffff",
             color: "#464545",
           },
           progressStyle: {
-            background: "#E39F00 !important",
+            background: "#E39F00",
           },
         });
+        setTimeout(() => {
         setVisibleForm(true);
+      }, 5000);
       } else {
         setError("Invalid or Expired OTP");
       }
@@ -121,11 +132,27 @@ export default function Booking() {
   // };
 
   const createBooking = async () => {
+    setBookingLoading(true);
     try {
       const res = await axios.post("http://localhost:3200/api/booking", {
         phoneNumber,
         ...formData,
       });
+
+      if (res.data.success) {
+        toast.success("Booking Created. waiting for accept", {
+          style: {
+            background: "#ffff",
+            color: "#464545",
+          },
+          progressStyle: {
+            background: "#E39F00",
+          },
+        });
+        setVisibleForm(false);
+        setCompleteReservation(true);
+      }
+
       if (res.data.message) {
         toast.success("Booking Created Successfullly. Waiting to admin!", {
           style: {
@@ -143,6 +170,7 @@ export default function Booking() {
       console.error(err);
       alert("Booking failed!");
     }
+    setBookingLoading(false);
   };
 
 
@@ -254,9 +282,10 @@ export default function Booking() {
                     <span
                       onClick={!loading ? sendOtp : null}
                       className={`font-semibold cursor-pointer 
+                    ${loading || sent ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
                         ${loading ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
                     >
-                      {loading ? "Sending..." : "Send"}
+                      {loading ? "Sending..." : sent ? "Sent" : "Send"}
                     </span>
 
                   </div>
@@ -305,41 +334,44 @@ export default function Booking() {
                 <div>
                   <input
                     placeholder="Name"
+                    type="name"
                     className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   /> <br />
                   <input
                     placeholder="Email"
+                    type="email"
                     className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   /> <br />
                   <select
-  name="occasion"
-  value={formData.occasion}
-  onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-  required
-  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3 appearance-none"
->
-  <option value="">Select Occasion</option>
-  <option value="Birthday">Birthday</option>
-  <option value="Wedding">Wedding</option>
-  <option value="Anniversary">Anniversary</option>
-  <option value="Corporate Event">Corporate Event</option>
-  <option value="Other">Other</option>
-</select>
- <br />
+                    name="occasion"
+                    value={formData.occasion}
+                    onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
+                    required
+                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3 appearance-none"
+                  >
+                    <option value="">Select Occasion</option>
+                    <option value="Birthday">Birthday</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Corporate Event">Corporate Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <br />
                   <input
                     placeholder="Special Requirements"
                     className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
                   /> <br />
                   <button
-                    onClick={createBooking}
+                    onClick={!bookingLoading ? createBooking : null}
                     className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer mt-5"
                   >
-                    Book Table
+                    {bookingLoading ? "Booking..." : "Book Table"}
                   </button>
                   
+
 
                 </div>
 
