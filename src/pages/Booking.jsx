@@ -52,11 +52,11 @@ export default function Booking() {
       if (res.data.success) {
         toast.success("OTP Sent Successfully!", {
           style: {
-            background: "#ffffff",
+            background: "#ffff",
             color: "#464545",
           },
           progressStyle: {
-            background: "#E39F00 !important",
+            background: "#E39F00",
           },
         });
         setTimeout(() => {
@@ -70,19 +70,10 @@ export default function Booking() {
 
       sent(true);
     } catch (error) {
-      toast.success("Faild to send OTP", {
-        style: {
-          background: "#ffffff",
-          color: "#464545",
-        },
-        progressStyle: {
-          background: "#E39F00 !important",
-        },
-      });
+      setError("Faild to send OTP");
       console.error(error);
     }
-    setLoading(false);
-  }
+  };
 
   //verify OTP
   const verifyOtp = async () => {
@@ -138,7 +129,6 @@ export default function Booking() {
         phoneNumber,
         ...formData,
       });
-
       if (res.data.success) {
         toast.success("Booking Created. waiting for accept", {
           style: {
@@ -152,20 +142,6 @@ export default function Booking() {
         setVisibleForm(false);
         setCompleteReservation(true);
       }
-
-      if (res.data.message) {
-        toast.success("Booking Created Successfullly. Waiting to admin!", {
-          style: {
-            background: "#ffffff",
-            color: "#464545",
-          },
-          progressStyle: {
-            background: "#E39F00 !important",
-          },
-        });
-      }
-      setVisibleForm(false);
-      setCompleteReservation(true);
     } catch (err) {
       console.error(err);
       alert("Booking failed!");
@@ -283,7 +259,6 @@ export default function Booking() {
                       onClick={!loading ? sendOtp : null}
                       className={`font-semibold cursor-pointer 
                     ${loading || sent ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
-                        ${loading ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
                     >
                       {loading ? "Sending..." : sent ? "Sent" : "Send"}
                     </span>
@@ -370,7 +345,6 @@ export default function Booking() {
                   >
                     {bookingLoading ? "Booking..." : "Book Table"}
                   </button>
-                  
 
 
                 </div>
