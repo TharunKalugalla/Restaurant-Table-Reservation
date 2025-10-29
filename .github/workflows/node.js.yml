@@ -19,8 +19,11 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          npm install
+          npm ci
           npm run build
+
+      - name: Check build folder
+        run: ls -la build
 
       - name: Deploy build folder to EC2
         uses: appleboy/scp-action@v0.1.7
@@ -29,4 +32,4 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "build/*"
-          target: "/var/www/html"  # <-- Nginx default web root
+          target: "/var/www/html"
