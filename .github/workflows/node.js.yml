@@ -1,8 +1,8 @@
-name: Deploy React app to AWS EC2
+name: Deploy React App to AWS EC2
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main ]   # Runs only when you push to main branch
 
 jobs:
   deploy:
@@ -17,15 +17,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies and build
+      - name: Install dependencies and build React app
         run: |
           npm ci
           npm run build
 
-      - name: Check build folder
+      - name: Verify build output
         run: ls -la build
 
-      - name: Deploy build folder to EC2
+      - name: Deploy build folder to AWS EC2 via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
