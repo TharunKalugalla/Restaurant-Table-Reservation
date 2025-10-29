@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import map from "@/assets/map.png";
+import map from "@/assets/Table2.png";
 import { Users, UtensilsCrossed, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ export default function ReservationForm() {
   return (
     <div className="flex flex-col mt-10">
       <div>
-        <img src={map} alt="Map" />
+        <img className="border-2 p-2 rounded-2xl" src={map} alt="Map" />
       </div>
 
       <Card className="p-6 border border-border mt-4">

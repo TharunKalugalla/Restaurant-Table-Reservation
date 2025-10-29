@@ -3,7 +3,7 @@ import coverImage from "@/assets/banner.png";
 import Logo from "@/assets/rasa_logo.png";
 import { MapPin } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
-import MenuItem from "@/components/MenuItem";
+// import MenuItem from "@/components/MenuItem";
 import Reviews from "@/components/Review";
 import ReservationForm from "@/components/ReservationForm";
 
@@ -99,7 +99,7 @@ export default function Home() {
             <PhotoGallery />
           </div>
           <div className="mt-8 p-4 lg:p-0" ref={menusRef}>
-            <MenuItem />
+            {/* <MenuItem /> */}
           </div>
           <div className="mt-8 p-4 lg:p-0" ref={reviewsRef}>
             <Reviews />
