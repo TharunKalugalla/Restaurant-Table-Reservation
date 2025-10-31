@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function PhotoGallery() {
-  const BASE_IMAGE_URL = "../assets/foods_images";
+  const BASE_IMAGE_URL = "/src/assets/foods_images/";
 
   const allPhotos = [
     { id: 1, name: "1.png" },
