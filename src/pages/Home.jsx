@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
 import coverImage from "@/assets/banner.png";
 import Logo from "@/assets/rasa_logo.png";
-import { MapPin } from "lucide-react";
+import { MapPin, PhoneCall } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
 // import MenuItem from "@/components/MenuItem";
 import Reviews from "@/components/Review";
 import ReservationForm from "@/components/ReservationForm";
+import { FaWhatsapp } from "react-icons/fa";
+
 
 export default function Home() {
   const photosRef = useRef(null);
@@ -50,6 +52,28 @@ export default function Home() {
                     <span>366 Crofton Rd, Orpington BR6 8NN</span>
                   </div>
                 </a>
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6 font-[Poppins] text-[12px]">
+                  <PhoneCall className="w-4 h-4" />
+                  <a href="tel:+44 016 8966 6990">
+                    <span >+44 016 8966 6990</span>
+                    </a>
+                  <br />
+                  <FaWhatsapp className="w-4 h-4" />
+                  <a href="https://wa.me/+447448276771">
+                    <span>+44 7448 276771</span>
+                    </a>
+                </div>
+
+                {/* <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6 font-[Poppins] text-[12px]">
+                  <PhoneCall className="w-4 h-4" />
+                  <span>+44 016 8966 6990</span>
+                </div>
+
+                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6 font-[Poppins] text-[12px]">
+                  <FaWhatsapp className="w-4 h-4" />
+                  <span>+44 7448 276771</span>
+                </div> */}
+
               </div>
             </div>
           </div>

@@ -68,9 +68,7 @@ export default function PhotoGallery() {
       ------------------------------------------------------ Photo Grid ----------------------------------------------------- 
       -----------------------------------------------------------------------------------------------------------------------*/}
       <div id="photo">
-        <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
-          Photos
-        </h2>
+
         <div className="grid grid-cols-3 h-70 gap-2">
           {displayPhotos.map((photo, i) => (
             <div
