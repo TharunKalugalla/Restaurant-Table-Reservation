@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import Img1 from '@/assets/foods_images/1.png';
-import Img2 from '@/assets/foods_images/2.png';
-import Img3 from '@/assets/foods_images/3.png';
-import Img4 from '@/assets/foods_images/4.png';
-import Img5 from '@/assets/foods_images/5.png';
-import Img6 from '@/assets/foods_images/6.png';
+import Img1 from '@/assets/foodimages2/img1.jpg';
+import Img2 from '@/assets/foodimages2/img2.jpg';
+import Img3 from '@/assets/foodimages2/img3.jpg';
+import Img4 from '@/assets/foodimages2/img4.jpg';
+import Img5 from '@/assets/foodimages2/img5.jpg';
+import Img6 from '@/assets/foodimages2/img6.jpg';
+import Img7 from '@/assets/foodimages2/img7.jpg';
+import Img8 from '@/assets/foodimages2/img8.jpg';
 
 export default function PhotoGallery() {
   // const BASE_IMAGE_URL = "/src/assets/foods_images/";
@@ -17,6 +19,8 @@ export default function PhotoGallery() {
     { id: 4, name: Img4 },
     { id: 5, name: Img5 },
     { id: 6, name: Img6 },
+    { id: 7, name: Img7 },
+    { id: 8, name: Img8 },
   ];
 
   const displayPhotos = allPhotos.slice(0, 5);
@@ -67,7 +71,7 @@ export default function PhotoGallery() {
         <h2 className="text-2xl font-serif font-bold text-foreground mb-6">
           Photos
         </h2>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 h-70 gap-2">
           {displayPhotos.map((photo, i) => (
             <div
               key={photo.id}
