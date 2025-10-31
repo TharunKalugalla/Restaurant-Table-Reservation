@@ -1,16 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import Img1 from '@/assets/foods_images/1.png';
+import Img2 from '@/assets/foods_images/2.png';
+import Img3 from '@/assets/foods_images/3.png';
+import Img4 from '@/assets/foods_images/4.png';
+import Img5 from '@/assets/foods_images/5.png';
+import Img6 from '@/assets/foods_images/6.png';
 
 export default function PhotoGallery() {
-  const BASE_IMAGE_URL = "/src/assets/foods_images/";
+  // const BASE_IMAGE_URL = "/src/assets/foods_images/";
 
   const allPhotos = [
-    { id: 1, name: "1.png" },
-    { id: 2, name: "2.png" },
-    { id: 3, name: "3.png" },
-    { id: 4, name: "4.png" },
-    { id: 5, name: "5.png" },
-    { id: 6, name: "6.png" },
+    { id: 1, name: Img1 },
+    { id: 2, name: Img2 },
+    { id: 3, name: Img3 },
+    { id: 4, name: Img4 },
+    { id: 5, name: Img5 },
+    { id: 6, name: Img6 },
   ];
 
   const displayPhotos = allPhotos.slice(0, 5);
@@ -72,7 +78,7 @@ export default function PhotoGallery() {
             >
               <img
                 src={
-                  photo.name ? BASE_IMAGE_URL + photo.name : "/placeholder.svg"
+                  photo.name ? photo.name : "/placeholder.svg"
                 }
                 alt={`Restaurant photo ${photo.id}`}
                 className="w-full h-full object-cover"
@@ -147,7 +153,7 @@ export default function PhotoGallery() {
                   imgErrorMap[photos[index].id]
                     ? "/placeholder.png"
                     : photos[index].name
-                    ? BASE_IMAGE_URL + photos[index].name
+                    ?  photos[index].name
                     : "/placeholder.png"
                 }
                 alt={`Preview ${photos[index].id}`}
