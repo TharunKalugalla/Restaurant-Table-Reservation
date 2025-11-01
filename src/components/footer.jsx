@@ -46,10 +46,9 @@ export default function Footer() {
 
           <div className="text-xs text-background/60 text-center flex flex-col gap-y-2">
             <p>
-              Copyright © 2018 Sephora USA, Inc. All rights reserved. Terms of
-              Use | Privacy Policy
+             Copyright © 2025 RAASA, ALL RIGHTS RESERVED
             </p>
-            <p>1-877-SEPHORA (1-877-737-4672) | TTY (1-888-866-5445)</p>
+            <p>+44 016 8966 6990 | raasalocksbottom@gmail.com | 366 Crofton Rd,Orpington BR6 8NN</p>
           </div>
         </div>
       </div>
