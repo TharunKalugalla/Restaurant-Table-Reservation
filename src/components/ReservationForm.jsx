@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import map from "@/assets/Table2.png";
+import map from "@/assets/table2.png";
 import { Users, UtensilsCrossed, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
