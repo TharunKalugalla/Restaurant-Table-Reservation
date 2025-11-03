@@ -63,7 +63,7 @@ export default function Reviews() {
       <h2 className="text-2xl font-serif font-bold text-foreground mb-3">
         Reviews
       </h2>
-      <p className="text-sm mb-6 text-muted-foreground">
+      <p className="text-sm mb-6">
         Hear what our customers have to say about Raasa Restaurant.
       </p>
 

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import coverImage from "@/assets/banner.png";
+import coverImage from "@/assets/banner_v2.png";
 import Logo from "@/assets/rasa_logo.png";
 import { MapPin, PhoneCall } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
@@ -47,12 +47,12 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className=" hover:underline"
                 >
-                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6 font-[Poppins] text-[12px]">
+                  <div className="flex items-center justify-center gap-2 text-sm  mb-6 font-[Poppins] text-[12px]">
                     <MapPin className="w-4 h-4" />
                     <span>366 Crofton Rd, Orpington BR6 8NN</span>
                   </div>
                 </a>
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-6 font-[Poppins] text-[12px]">
+                <div className="flex items-center justify-center gap-2 text-sm  mb-6 font-[Poppins] text-[12px]">
                   <PhoneCall className="w-4 h-4" />
                   <a href="tel:+44 016 8966 6990">
                     <span >+44 016 8966 6990</span>
