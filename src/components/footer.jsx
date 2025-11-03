@@ -10,7 +10,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-[#390905] text-background">
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
         {/* Footer Content */}
 
@@ -34,19 +34,20 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Facebook className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Twitter className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Instagram className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Youtube className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Linkedin className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Mail className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Grid3x3 className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
+              <Facebook className="w-5 h-5 text-[#1877F2] hover:opacity-80 transition cursor-pointer" /> 
+              <Twitter className="w-5 h-5 text-[#1DA1F2] hover:opacity-80 transition cursor-pointer" /> 
+              <Instagram className="w-5 h-5 text-[#E1306C] hover:opacity-80 transition cursor-pointer" /> 
+              <Youtube className="w-5 h-5 text-[#FF0000] hover:opacity-80 transition cursor-pointer" /> 
+              <Linkedin className="w-5 h-5 text-[#0A66C2] hover:opacity-80 transition cursor-pointer" /> 
+              <Mail className="w-5 h-5 text-[#EA4335] hover:opacity-80 transition cursor-pointer" /> 
+              <Grid3x3 className="w-5 h-5 text-[#5F6368] hover:opacity-80 transition cursor-pointer" /> 
             </div>
+
           </div>
 
-          <div className="text-xs text-background/60 text-center flex flex-col gap-y-2">
+          <div className="text-xs text-[#ffff] text-center flex flex-col gap-y-2">
             <p>
-             Copyright © 2025 RAASA, ALL RIGHTS RESERVED
+              Copyright © 2025 RAASA, ALL RIGHTS RESERVED
             </p>
             <p>+44 016 8966 6990 | raasalocksbottom@gmail.com | 366 Crofton Rd,Orpington BR6 8NN</p>
           </div>
