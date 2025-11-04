@@ -227,9 +227,7 @@ export default function Booking() {
             </div>
 
             {/* Description */}
-            <div className="space-y-3 bg-amber-100 p-2">
 
-            </div>
 
             {/* Details Section */}
             {!completeReservation && (
