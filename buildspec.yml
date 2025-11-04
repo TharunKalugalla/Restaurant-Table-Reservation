@@ -1,4 +1,5 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
@@ -7,21 +8,24 @@ phases:
       - echo "Installing dependencies with npm ci..."
       - npm ci
       - echo "Verifying Vite installation..."
-      - ./node_modules/.bin/vite --version
+      - npx vite --version
+
   build:
     commands:
       - echo "Building the app..."
       - npm run build
+
   post_build:
     commands:
       - echo "Build completed successfully!"
       - echo "Syncing built files to S3..."
-      - aws s3 sync dist/ s3://raasa-restaurant-frontend/
+      - aws s3 sync dist/ s3://raasa-restaurant-frontend/ --delete
       - echo "Setting MIME types..."
       - aws s3 cp s3://raasa-restaurant-frontend/assets/ s3://raasa-restaurant-frontend/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
       - aws s3 cp s3://raasa-restaurant-frontend/assets/ s3://raasa-restaurant-frontend/assets/ --recursive --exclude "*" --include "*.css" --metadata-directive REPLACE --content-type text/css
       - aws s3 cp s3://raasa-restaurant-frontend/index.html s3://raasa-restaurant-frontend/index.html --metadata-directive REPLACE --content-type text/html
       - echo "Upload complete!"
+
 artifacts:
   files:
     - 'dist/**/*'
