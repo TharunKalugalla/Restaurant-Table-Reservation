@@ -23,7 +23,7 @@ export default function Footer() {
               <span>Sign up for Sephora Emails</span>
               <div className="flex items-center gap-2">
                 <input
-                  type="email"
+                  type=""
                   placeholder="Email"
                   className="px-4 py-2 bg-background/10 text-background placeholder-background/50 rounded text-sm"
                 />

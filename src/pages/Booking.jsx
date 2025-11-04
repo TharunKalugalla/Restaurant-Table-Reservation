@@ -96,8 +96,8 @@ export default function Booking() {
           },
         });
         setTimeout(() => {
-        setVisibleForm(true);
-      }, 5000);
+          setVisibleForm(true);
+        }, 5000);
       } else {
         setError("Invalid or Expired OTP");
       }
@@ -199,10 +199,10 @@ export default function Booking() {
           <div className="space-y-6">
 
             {/* Restaurant Header */}
-            <div className="flex items-end gap-4">
+            <div className="">
               <img src={Logo} alt="Raasa Restaurant Logo" />
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-gray-900 mt-5">
                   Raasa Restaurant
                 </h2>
                 <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
@@ -226,6 +226,10 @@ export default function Booking() {
               </div>
             </div>
 
+            {/* Restaurant center Header */}
+
+
+
             {/* Description */}
 
 
@@ -233,7 +237,7 @@ export default function Booking() {
             {!completeReservation && (
               <div className="flex flex-col gap-4">
                 <div className="space-y-3">
-            
+
                 </div>
 
                 {/* Phone input + Send (always visible) */}
@@ -362,7 +366,7 @@ export default function Booking() {
             <img
               src={visibleForm || completeReservation ? bookingImage2 : bookingImage}
               alt="Raasa Restaurant Dish"
-              className={`w-full h-auto rounded-md object-cover ${visibleForm && "aspect-square"
+              className={`w-full h-70 rounded-md object-cover ${visibleForm && "aspect-square"
                 }`}
             />
           </div>
