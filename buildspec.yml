@@ -3,18 +3,17 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20
+      nodejs: 20  # Example; change based on your runtime
     commands:
-      - echo Installing dependencies...
-      - npm ci --legacy-peer-deps
-
+      - echo "Installing dependencies..."
+      - npm install  # Example command
   build:
     commands:
-      - echo Building the React app...
-      - npm run build
-
+      - echo "Building..."
+      - npm run build  # Example command
+  post_build:
+    commands:
+      - echo "Build completed!"
 artifacts:
   files:
-    - '**/*'
-  base-directory: dist
-  discard-paths: no
+    - '**/*'  # Include all files in artifacts
