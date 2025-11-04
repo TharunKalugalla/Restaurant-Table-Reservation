@@ -16,9 +16,14 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
-      - echo "Syncing ONLY dist/ to S3 (with delete for cleanup)..."
-      - echo "S3 sync complete! Bucket now has only built files."
+      - echo "Syncing FULL repo to S3 (including src/, public/, etc.)..."
+      - aws s3 sync . s3://raasa-restaurant-frontend/  # '.' = entire current dir (repo root)
+      - echo "Setting MIME types only for built files..."
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/assets/ s3://raasa-restaurant-frontend/dist/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/assets/ s3://raasa-restaurant-frontend/dist/assets/ --recursive --exclude "*" --include "*.css" --metadata-directive REPLACE --content-type text/css
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/index.html s3://raasa-restaurant-frontend/dist/index.html --metadata-directive REPLACE --content-type text/html
+      - echo "S3 sync complete!"
 artifacts:
   files:
-    - 'dist/**/*'  # CodeBuild internals: Only package dist/ for pipeline handoff
-  discard-paths: yes
+    - '**/*'  # Now includes everything for full packaging
+  discard-paths: no  # Keeps folder structure
