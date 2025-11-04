@@ -6,9 +6,9 @@ phases:
       nodejs: 20
     commands:
       - echo "Installing dependencies with npm ci..."
-      - npm ci  # Installs exactly from package-lock.json
+      - npm ci  
       - echo "Verifying Vite installation..."
-      - ./node_modules/.bin/vite --version  # Quick check: should print Vite version
+      - ./node_modules/.bin/vite --version 
   build:
     commands:
       - echo "Building the app..."
@@ -16,6 +16,9 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
+
 artifacts:
   files:
-    - '**/*'  # Packages everything for deployment (e.g., to S3)
+    - 'dist/**/*'  
+
+  discard-paths: yes 
