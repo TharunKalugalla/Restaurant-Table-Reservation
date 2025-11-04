@@ -18,7 +18,7 @@ phases:
       - echo "Build completed successfully!"
       - echo "Syncing built files to S3 with correct MIME types..."
       # Sync all files (initial upload without MIME)
-      - aws s3 sync dist/ s3://your-bucket-name/ --delete
+      - aws s3 sync dist/ s3://raasa-restaurant-frontend/ --delete
       # Force MIME types for JS files (main culprit for module errors)
       - aws s3 cp s3://raasa-restaurant-frontend/dist/assets/ s3://raasa-restaurant-frontend/dist/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
       # For CSS files
