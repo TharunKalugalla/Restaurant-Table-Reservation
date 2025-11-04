@@ -20,11 +20,11 @@ phases:
       # Sync all files (initial upload without MIME)
       - aws s3 sync dist/ s3://your-bucket-name/ --delete
       # Force MIME types for JS files (main culprit for module errors)
-      - aws s3 cp s3://your-bucket-name/dist/assets/ s3://your-bucket-name/dist/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/assets/ s3://raasa-restaurant-frontend/dist/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
       # For CSS files
-      - aws s3 cp s3://your-bucket-name/dist/assets/ s3://your-bucket-name/dist/assets/ --recursive --exclude "*" --include "*.css" --metadata-directive REPLACE --content-type text/css
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/assets/ s3://raasa-restaurant-frontend/dist/assets/ --recursive --exclude "*" --include "*.css" --metadata-directive REPLACE --content-type text/css
       # For HTML (index.html)
-      - aws s3 cp s3://your-bucket-name/dist/index.html s3://your-bucket-name/dist/index.html --metadata-directive REPLACE --content-type text/html
+      - aws s3 cp s3://raasa-restaurant-frontend/dist/index.html s3://raasa-restaurant-frontend/dist/index.html --metadata-directive REPLACE --content-type text/html
       # Optional: For images/fonts (S3 often auto-detects, but add if needed)
       # - aws s3 cp s3://your-bucket-name/dist/assets/ s3://your-bucket-name/dist/assets/ --recursive --exclude "*" --include "*.png" --metadata-directive REPLACE --content-type image/png
       - echo "S3 sync complete!"
