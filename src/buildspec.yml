@@ -16,13 +16,13 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
-      - echo "Syncing built files to S3 (without deleting existing files)..."
+      - echo "Syncing built files to S3..."
       - aws s3 sync dist/ s3://raasa-restaurant-frontend/
-      - echo "Setting correct MIME types for JS/CSS/HTML..."
+      - echo "Setting MIME types..."
       - aws s3 cp s3://raasa-restaurant-frontend/assets/ s3://raasa-restaurant-frontend/assets/ --recursive --exclude "*" --include "*.js" --metadata-directive REPLACE --content-type application/javascript
       - aws s3 cp s3://raasa-restaurant-frontend/assets/ s3://raasa-restaurant-frontend/assets/ --recursive --exclude "*" --include "*.css" --metadata-directive REPLACE --content-type text/css
       - aws s3 cp s3://raasa-restaurant-frontend/index.html s3://raasa-restaurant-frontend/index.html --metadata-directive REPLACE --content-type text/html
-      - echo "S3 sync and MIME updates complete!"
+      - echo "Upload complete!"
 artifacts:
   files:
     - 'dist/**/*'
