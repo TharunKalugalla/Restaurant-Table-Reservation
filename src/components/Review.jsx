@@ -7,18 +7,40 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Reviews() {
-  const reviews = [
-    { id: 1, author: "Mr. Jain", rating: 5, text: "Amazing food and service!" },
-    { id: 2, author: "Ms. Patel", rating: 4.5, text: "Great food and ambiance." },
-    { id: 3, author: "Mr. Fernando", rating: 3.5, text: "Average experience overall." },
-    { id: 4, author: "Ms. Silva", rating: 2.5, text: "Food was okay, could improve." },
-    { id: 5, author: "Ms. Saman", rating: 5, text: "Excellent food and service!" },
-  ];
+  const [reviews, setReviews] = useState([]);
+  const [info, setInfo] = useState({});
+  const [expanded, setExpanded] = useState({}); // Track which reviews are expanded
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/review/`);
+        const data = res.data;
+
+        setInfo({
+          name: data.name,
+          rating: data.rating,
+          count: data.userRatingCount,
+        });
+        setReviews(data.reviews || []);
+      } catch (err) {
+        console.log("Error fetching reviews:", err);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const averageRating =
-    reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+    reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length
+      : 0;
   const totalRatings = reviews.length;
 
   const ratingCounts = [1, 2, 3, 4, 5].reduce((acc, rating) => {
@@ -57,49 +79,72 @@ export default function Reviews() {
     );
   };
 
+  const toggleExpand = (index) => {
+    setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
   return (
     <div id="review" className="w-full">
       {/*------------------------------------------------------- Heading ---------------------------------------------------------*/}
       <h2 className="text-2xl font-serif font-bold text-foreground mb-3">
         Reviews
       </h2>
-      <p className="text-sm mb-6 text-muted-foreground">
+      <p className="text-sm mb-6">
         Hear what our customers have to say about Raasa Restaurant.
       </p>
 
-      {/*-----------------------------------------------------------------------------------------------------------------------
-      ------------------------------------------------------ Review Carousel ---------------------------------------------------
-      --------------------------------------------------------------------------------------------------------------------------*/}
+      {/*------------------------------------------------------ Review Carousel ---------------------------------------------------*/}
       <div className="w-full mb-8">
         <Carousel className="w-full">
           <CarouselContent>
-            {reviews.map((review) => (
-              <CarouselItem className="md:basis-1/2" key={review.id}>
-                <Card className="p-4 border border-border w-full">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-semibold">
-                      {review.author.charAt(0)}
+            {reviews.map((review, index) => {
+              const fullText = review.text?.text || "No comment provided.";
+              const shortText =
+                fullText.length > 100
+                  ? fullText.substring(0, 100) + "..."
+                  : fullText;
+              const isExpanded = expanded[index];
+
+              return (
+                <CarouselItem className="md:basis-1/2" key={index}>
+                  <Card className="p-4 border border-border w-full">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-semibold">
+                        {review.authorAttribution?.displayName?.charAt(0) || "?"}
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground text-sm">
+                          {review.authorAttribution?.displayName || "Anonymous"}
+                        </p>
+                        {renderStars(review.rating, "w-3 h-3")}
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-foreground text-sm">{review.author}</p>
-                      {renderStars(review.rating, "w-3 h-3")}
-                    </div>
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">{review.text}</p>
-                </Card>
-              </CarouselItem>
-            ))}
+
+                    <p className="text-xs text-muted-foreground mt-2">
+                      {isExpanded ? fullText : shortText}
+                    </p>
+
+                    {fullText.length > 100 && (
+                      <button
+                        onClick={() => toggleExpand(index)}
+                        className="text-[#390905] text-xs mt-1 hover:underline"
+                      >
+                        {isExpanded ? "See Less" : "See More"}
+                      </button>
+                    )}
+                  </Card>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
           <CarouselPrevious className="-left-6" />
           <CarouselNext className="-right-6" />
         </Carousel>
       </div>
 
-      {/*----------------------------------------------------------------------------------------------------------------------
-      ------------------------------------------------------------ Rating Summary ---------------------------------------------
-      -------------------------------------------------------------------------------------------------------------------------*/}
+      {/*------------------------------------------------------------ Rating Summary ---------------------------------------------*/}
       <div className="flex flex-wrap items-end gap-8">
-        {/*--------------------------------------------------------- Average Rating ----------------------------------------------*/}
+        {/* Average Rating */}
         <div className="min-w-[120px]">
           <div className="flex items-end gap-1 mb-1">
             <span className="text-5xl font-serif font-bold text-foreground">
@@ -113,7 +158,7 @@ export default function Reviews() {
           </p>
         </div>
 
-        {/*------------------------------------------------------ Rating Distribution ---------------------------------------------*/}
+        {/* Rating Distribution */}
         <div className="flex-1 space-y-2 max-w-[450px]">
           {[5, 4, 3, 2, 1].map((rating) => {
             const count = ratingCounts[rating] || 0;

@@ -10,174 +10,11 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-[#390905] text-background">
       <div className="max-w-7xl mx-auto px-4 pt-12 pb-6">
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12 text-center">
-          <div>
-            <h4 className="font-semibold mb-4">About Sephora</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  About Sephora
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Sephora Stands Social Impact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Affiliates
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Supply Chain Transparency
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Sitemap
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Sephora Global Sites
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          <div>
-            <h4 className="font-semibold mb-4">My Sephora</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  My Account
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Order Status
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Beauty Insider
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Rewards Bazaar
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Loves
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Playl by Sephora - Subscribe Now
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Flash Unlimited Shipping
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          <div>
-            <h4 className="font-semibold mb-4">Help & FAQs</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Online Ordering
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Shipping
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Billing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Returns & Exchanges
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  International Shipment
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Customer Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Contact Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Ways to Shop</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Just Arrived
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Bestsellers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Beauty Offers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Gift Cards
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Store Locations, Events & Classes
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Book a Reservation
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:opacity-80 transition">
-                  Sephora inside JCPenney
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
 
         {/* Newsletter and Social */}
         <div className="border-t border-background/20 pt-8">
@@ -197,22 +34,22 @@ export default function Footer() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Facebook className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Twitter className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Instagram className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Youtube className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Linkedin className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Mail className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
-              <Grid3x3 className="w-5 h-5 hover:opacity-80 transition cursor-pointer" />
+              <Facebook className="w-5 h-5 text-[#1877F2] hover:opacity-80 transition cursor-pointer" /> 
+              <Twitter className="w-5 h-5 text-[#1DA1F2] hover:opacity-80 transition cursor-pointer" /> 
+              <Instagram className="w-5 h-5 text-[#E1306C] hover:opacity-80 transition cursor-pointer" /> 
+              <Youtube className="w-5 h-5 text-[#FF0000] hover:opacity-80 transition cursor-pointer" /> 
+              <Linkedin className="w-5 h-5 text-[#0A66C2] hover:opacity-80 transition cursor-pointer" /> 
+              <Mail className="w-5 h-5 text-[#EA4335] hover:opacity-80 transition cursor-pointer" /> 
+              <Grid3x3 className="w-5 h-5 text-[#5F6368] hover:opacity-80 transition cursor-pointer" /> 
             </div>
+
           </div>
 
-          <div className="text-xs text-background/60 text-center flex flex-col gap-y-2">
+          <div className="text-xs text-[#ffff] text-center flex flex-col gap-y-2">
             <p>
-              Copyright © 2018 Sephora USA, Inc. All rights reserved. Terms of
-              Use | Privacy Policy
+              Copyright © 2025 RAASA, ALL RIGHTS RESERVED
             </p>
-            <p>1-877-SEPHORA (1-877-737-4672) | TTY (1-888-866-5445)</p>
+            <p>+44 016 8966 6990 | raasalocksbottom@gmail.com | 366 Crofton Rd,Orpington BR6 8NN</p>
           </div>
         </div>
       </div>

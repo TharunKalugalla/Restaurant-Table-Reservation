@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import map from "@/assets/Table2.png";
+import map from "@/assets/table2.png";
 import { Users, UtensilsCrossed, ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +56,18 @@ export default function ReservationForm() {
                   <option value="PS Table 1">PS Table 1</option>
                   <option value="PS Table 2">PS Table 2</option>
                   <option value="PS Table 3">PS Table 3</option>
+                  <option value="PS Table 4">PS Table 4</option>
+                  <option value="PS Table 5">PS Table 5</option>
+                  <option value="PS Table 6">PS Table 6</option>
+                  <option value="PS Table 7">PS Table 7</option>
+                  <option value="PS Table 8">PS Table 8</option>
+                  <option value="PS Table 9">PS Table 9</option>
+                  <option value="PS Table 10">PS Table 10</option>
+                  <option value="PS Table 11">PS Table 11</option>
+                  <option value="PS Table 12">PS Table 12</option>
+                  <option value="PS Table 13">PS Table 13</option>
+                  <option value="PS Table 14">PS Table 14</option>
+                  <option value="PS Table 15">PS Table 15</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
@@ -79,6 +91,9 @@ export default function ReservationForm() {
                   <option value="2-2 People">2-2 People</option>
                   <option value="4-4 People">4-4 People</option>
                   <option value="6-6 People">6-6 People</option>
+                  <option value="6+ People">6+ People</option>
+                  <option value="10+ People">10+ People</option>
+                  <option value="20+ People">20+ People</option>
                 </select>
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               </div>
