@@ -17,7 +17,6 @@ phases:
     commands:
       - echo "Build completed successfully!"
       - echo "Syncing ONLY dist/ to S3 (with delete for cleanup)..."
-      - aws s3 sync dist/ s3://raasa-restaurant-frontend/ --delete  # Uploads just dist/, removes old extras
       - echo "S3 sync complete! Bucket now has only built files."
 artifacts:
   files:
