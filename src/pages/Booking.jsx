@@ -228,24 +228,14 @@ export default function Booking() {
 
             {/* Description */}
             <div className="space-y-3 bg-amber-100 p-2">
-              <p className="text-sm text-gray-700 leading-relaxed">
-                Lorem ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took...
-              </p>
+
             </div>
 
             {/* Details Section */}
             {!completeReservation && (
               <div className="flex flex-col gap-4">
                 <div className="space-y-3">
-                  <h3 className="font-semibold text-gray-900">Details</h3>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Lorem ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took...
-                  </p>
+            
                 </div>
 
                 {/* Phone input + Send (always visible) */}
