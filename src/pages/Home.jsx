@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import coverImage from "@/assets/banner_v2.png";
+import coverImage from "@/assets/bannerS2.png";
 import Logo from "@/assets/rasa_logo.png";
 import { MapPin, PhoneCall } from "lucide-react";
 import PhotoGallery from "@/components/PhotoGallery";
