@@ -86,10 +86,10 @@ export default function Reviews() {
   return (
     <div id="review" className="w-full">
       {/*------------------------------------------------------- Heading ---------------------------------------------------------*/}
-      <h2 className="text-2xl font-serif font-bold text-foreground mb-3">
+      <h2 className="text-2xl font-serif text-[#ffff] font-bold mb-3">
         Reviews
       </h2>
-      <p className="text-sm mb-6">
+      <p className="text-sm text-[#F0F0F0] mb-6">
         Hear what our customers have to say about Raasa Restaurant.
       </p>
 
@@ -107,27 +107,27 @@ export default function Reviews() {
 
               return (
                 <CarouselItem className="md:basis-1/2" key={index}>
-                  <Card className="p-4 border border-border w-full">
+                  <Card className="p-4 border-[#F0A800] bg-[#261911] w-full">
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-semibold">
+                      <div className="w-8 h-8 rounded-full bg-[#F0A800] text-[#F0F0F0] flex items-center justify-center text-sm font-semibold">
                         {review.authorAttribution?.displayName?.charAt(0) || "?"}
                       </div>
                       <div>
-                        <p className="font-medium text-foreground text-sm">
+                        <p className="font-medium text-[#ffff] text-sm">
                           {review.authorAttribution?.displayName || "Anonymous"}
                         </p>
                         {renderStars(review.rating, "w-3 h-3")}
                       </div>
                     </div>
 
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-xs text-[#F0F0F0] mt-2">
                       {isExpanded ? fullText : shortText}
                     </p>
 
                     {fullText.length > 100 && (
                       <button
                         onClick={() => toggleExpand(index)}
-                        className="text-[#390905] text-xs mt-1 hover:underline"
+                        className="text-[#F0F0F0] text-xs mt-1 hover:underline"
                       >
                         {isExpanded ? "See Less" : "See More"}
                       </button>
@@ -147,13 +147,13 @@ export default function Reviews() {
         {/* Average Rating */}
         <div className="min-w-[120px]">
           <div className="flex items-end gap-1 mb-1">
-            <span className="text-5xl font-serif font-bold text-foreground">
+            <span className="text-5xl font-serif font-bold text-[#ffff]">
               {averageRating.toFixed(1)}
             </span>
-            <span className="text-lg text-muted-foreground">/5</span>
+            <span className="text-lg text-[#F0F0F0]">/5</span>
           </div>
           {renderStars(averageRating)}
-          <p className="text-xs text-muted-foreground mt-2">
+          <p className="text-xs text-[#F0F0F0] mt-2">
             {totalRatings} Ratings
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function Reviews() {
             return (
               <div key={rating} className="flex items-center gap-3">
                 <div className="flex items-center gap-1 w-24">
-                  <span className="text-xs text-muted-foreground font-medium">
+                  <span className="text-xs text-[#F0F0F0] font-medium">
                     {rating}
                   </span>
                   {renderStars(rating, "w-3 h-3")}
@@ -175,12 +175,12 @@ export default function Reviews() {
 
                 <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-amber-500 transition-all duration-500 ease-in-out"
+                    className="h-full bg-[#F0A800] transition-all duration-500 ease-in-out"
                     style={{ width: `${percent}%` }}
                   />
                 </div>
 
-                <span className="text-xs text-muted-foreground w-6 text-right">
+                <span className="text-xs text-[#F0F0F0] w-6 text-right">
                   {count}
                 </span>
               </div>

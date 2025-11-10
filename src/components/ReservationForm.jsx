@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import map from "@/assets/table2.png";
@@ -14,14 +14,46 @@ export default function ReservationForm() {
     time: "",
   });
 
+  const [minDate, setMinDate] = useState("");
+  const [minTime, setMinTime] = useState("");
+
+  useEffect(() => {
+    const now = new Date();
+
+    // Get YYYY-MM-DD format
+    const today = now.toISOString().split("T")[0];
+
+    // Get HH:MM format (24-hour)
+    const currentTime = now.toTimeString().slice(0, 5);
+
+    setMinDate(today);
+    setMinTime(currentTime);
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // If user changes date, adjust time restriction
+    if (name === "date") {
+      if (value !== minDate) {
+        // Future date → allow any time
+        setMinTime("00:00");
+      } else {
+        // Today → restrict past times
+        const now = new Date();
+        const currentTime = now.toTimeString().slice(0, 5);
+        setMinTime(currentTime);
+      }
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Navigate to /booking with state
     navigate("/booking", { state: formData });
   };
 
@@ -31,61 +63,52 @@ export default function ReservationForm() {
         <img className="border-2 p-2 rounded-2xl" src={map} alt="Map" />
       </div>
 
-      <Card className="p-6 border border-border mt-4">
-        <h3 className="text-lg font-serif font-bold text-foreground text-center">
+      <Card className="p-6 border bg-[#261911] border-[#F0A800] mt-4">
+        <h3 className="text-lg font-serif font-bold text-[#ffff] text-center">
           Make a reservation
         </h3>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Table */}
+          {/* Table and People */}
           <div className="grid grid-cols-2 gap-4">
+            {/* Table */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
                 Table Number
               </label>
               <div className="relative">
-                <UtensilsCrossed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
+                <UtensilsCrossed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
                 <select
                   name="table"
                   value={formData.table}
-                  required
                   onChange={handleChange}
-                  className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
+                  required
+                  className="w-full pl-10 pr-10 py-2 border border-[#3D2C21] text-[#F0F0F0] bg-[#261911] rounded-md text-sm appearance-none"
                 >
                   <option value="">Select a table</option>
-                  <option value="PS Table 1">PS Table 1</option>
-                  <option value="PS Table 2">PS Table 2</option>
-                  <option value="PS Table 3">PS Table 3</option>
-                  <option value="PS Table 4">PS Table 4</option>
-                  <option value="PS Table 5">PS Table 5</option>
-                  <option value="PS Table 6">PS Table 6</option>
-                  <option value="PS Table 7">PS Table 7</option>
-                  <option value="PS Table 8">PS Table 8</option>
-                  <option value="PS Table 9">PS Table 9</option>
-                  <option value="PS Table 10">PS Table 10</option>
-                  <option value="PS Table 11">PS Table 11</option>
-                  <option value="PS Table 12">PS Table 12</option>
-                  <option value="PS Table 13">PS Table 13</option>
-                  <option value="PS Table 14">PS Table 14</option>
-                  <option value="PS Table 15">PS Table 15</option>
+                  {[...Array(15)].map((_, i) => (
+                    <option key={i} value={`PS Table ${i + 1}`}>
+                      PS Table {i + 1}
+                    </option>
+                  ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               </div>
             </div>
 
             {/* People */}
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
                 Peoples Count
               </label>
               <div className="relative">
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground pointer-events-none" />
+                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
                 <select
                   name="people"
                   value={formData.people}
                   onChange={handleChange}
                   required
-                  className="w-full pl-10 pr-10 py-2 border border-border rounded-md bg-background text-foreground text-sm appearance-none"
+                  className="w-full pl-10 pr-10 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm appearance-none"
                 >
                   <option value="">Select people count</option>
                   <option value="2-2 People">2-2 People</option>
@@ -95,7 +118,7 @@ export default function ReservationForm() {
                   <option value="10+ People">10+ People</option>
                   <option value="20+ People">20+ People</option>
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               </div>
             </div>
           </div>
@@ -103,7 +126,7 @@ export default function ReservationForm() {
           {/* Date and Time */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
                 Date
               </label>
               <input
@@ -112,13 +135,13 @@ export default function ReservationForm() {
                 value={formData.date}
                 onChange={handleChange}
                 required
-                placeholder="Select date"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
+                min={minDate}
+                className="w-full px-3 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
                 Time
               </label>
               <input
@@ -127,15 +150,15 @@ export default function ReservationForm() {
                 value={formData.time}
                 onChange={handleChange}
                 required
-                placeholder="Select time"
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm"
+                min={minTime}
+                className="w-full px-3 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm"
               />
             </div>
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
+            className="w-full bg-[#F0A800] hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
           >
             Book Now
           </Button>

@@ -181,14 +181,14 @@ export default function Booking() {
   // };
 
   return (
-    <div className="mx-auto mt-4">
+    <div className="mx-auto">
       {/*------------------------------------------------------------------------------------------------------------------------
       ------------------------------------------------- Main Content ------------------------------------------------------------
       ---------------------------------------------------------------------------------------------------------------------------*/}
-      <div className="bg-white shadow-sm p-8 pb-10">
+      <div className="bg-[#1B120C] shadow-sm p-8 pb-10">
         {/*---------------------------------------------- Header ----------------------------------------------------------------*/}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-[#F0F0F0]">
             You're almost done!
           </h1>
         </div>
@@ -202,10 +202,10 @@ export default function Booking() {
             <div className="">
               <img src={Logo} alt="Raasa Restaurant Logo" />
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-900 mt-5">
+                <h2 className="text-xl font-bold text-[#ffff] mt-5">
                   Raasa Restaurant
                 </h2>
-                <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-600">
+                <div className="flex flex-wrap gap-4 mt-2 text-sm text-[#F0F0F0]">
                   <div className="flex items-center gap-1">
                     <UtensilsCrossed className="w-4 h-4" />
                     <span>{bookingData.table || "Table"}</span>
@@ -236,14 +236,13 @@ export default function Booking() {
             {/* Details Section */}
             {!completeReservation && (
               <div className="flex flex-col gap-4">
-                <div className="space-y-3">
 
-                </div>
 
                 {/* Phone input + Send (always visible) */}
                 <div className="space-y-3">
                   <div className="flex gap-2 items-center">
                     <PhoneInput
+                      className="bg-[#261911] text-[#F0F0F0] border-[#3D2C21]"
                       value={phoneNumber}
                       onChange={(value) => setPhoneNumber(value)}
                       label="Phone Number"
@@ -252,13 +251,13 @@ export default function Booking() {
                     <span
                       onClick={!loading ? sendOtp : null}
                       className={`font-semibold cursor-pointer 
-                    ${loading || sent ? "text-gray-400" : "text-amber-500 hover:text-amber-600"}`}
+                    ${loading || sent ? "text-[#F0F0F0]" : "text-[#F0A800] hover:text-amber-600"}`}
                     >
                       {loading ? "Sending..." : sent ? "Sent" : "Send"}
                     </span>
 
                   </div>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-[#F0F0F0]">
                     You will receive a text message to verify your account.
                     Message & data rates may apply
                   </p>
@@ -277,7 +276,7 @@ export default function Booking() {
                       <button
                         type="button"
                         onClick={verifyOtp}
-                        className="bg-amber-500 hover:bg-amber-600 text-white py-1.5 px-4 rounded-md font-semibold cursor-pointer w-[200px]"
+                        className="bg-[#F0A800] hover:bg-amber-600 text-[#F0F0F0] py-1.5 px-4 rounded-md font-semibold cursor-pointer w-[200px]"
                       >
                         Verify
                       </button>
@@ -297,20 +296,20 @@ export default function Booking() {
             -----------------------------------------------------------------------------------------------------------------------------------------------------------------*/}
             {visibleForm && (
               <div className="max-w-2xl mx-auto">
-                <h3 className="font-semibold text-gray-900 mt-2">
+                <h3 className="font-semibold text-[#F0A800] mt-2">
                   Reservation Details
                 </h3>
                 <div>
                   <input
                     placeholder="Name"
                     type="name"
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
+                    className="w-full px-3 py-2 border border-[#3D2C21] text-[#F0F0F0] rounded-md bg-[#261911] text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   /> <br />
                   <input
                     placeholder="Email"
                     type="email"
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
+                    className="w-full px-3 py-2 border border-[#3D2C21] text-[#F0F0F0] rounded-md bg-[#261911] text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   /> <br />
                   <select
@@ -318,7 +317,7 @@ export default function Booking() {
                     value={formData.occasion}
                     onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
                     required
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3 appearance-none"
+                    className="w-full px-3 py-2 border border-[#3D2C21] text-[#F0F0F0] rounded-md bg-[#261911] text-sm mt-3 appearance-none"
                   >
                     <option value="">Select Occasion</option>
                     <option value="Birthday">Birthday</option>
@@ -330,12 +329,12 @@ export default function Booking() {
                   <br />
                   <input
                     placeholder="Special Requirements"
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground text-sm mt-3"
+                    className="w-full px-3 py-2 border border-[#3D2C21] text-[#F0F0F0] rounded-md bg-[#261911] text-sm mt-3"
                     onChange={(e) => setFormData({ ...formData, specialRequirements: e.target.value })}
                   /> <br />
                   <button
                     onClick={!bookingLoading ? createBooking : null}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer mt-5"
+                    className="w-full bg-[#F0A800] hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer mt-5"
                   >
                     {bookingLoading ? "Booking..." : "Book Table"}
                   </button>

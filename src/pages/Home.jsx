@@ -15,16 +15,8 @@ export default function Home() {
   const reviewsRef = useRef(null);
 
   return (
-    <div className="flex flex-col w-full mx-auto bg-white mt-4">
+    <div className="flex flex-col w-full mx-auto bg-[#1B120C]">
       {/*------------------------------------------------------ Banner ----------------------------------------------------------*/}
-      <div className="rounded-lg flex w-full h-[400px] mx-auto my-auto">
-        <img
-          src={coverImage}
-          alt="Restaurant floor plan"
-          className="w-full object-cover h-full"
-        />
-      </div>
-
       {/*---------------------------------------------------------- Body Section ---------------------------------------------------*/}
       <div className="max-w-6xl w-full mx-auto mt-8 mb-10 px-4 xl:px-0 grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-10">
 
@@ -38,7 +30,7 @@ export default function Home() {
                 <div className="flex justify-center mb-2">
                   <img src={Logo} alt="Raasa Restaurant Logo" className="w-40" />
                 </div>
-                <h1 className="text-4xl font-bold text-foreground mb-2 font-[Inter]">
+                <h1 className="text-4xl font-bold text-[#ffff] mb-2 font-[Inter]">
                   Raasa Restaurant
                 </h1>
                 <a
@@ -47,12 +39,12 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className=" hover:underline"
                 >
-                  <div className="flex items-center justify-center gap-2 text-sm  mb-6 font-[Poppins] text-[12px]">
+                  <div className="flex items-center justify-center gap-2 text-sm text-[#F0F0F0]  mb-6 font-[Poppins] text-[12px]">
                     <MapPin className="w-4 h-4" />
                     <span>366 Crofton Rd, Orpington BR6 8NN</span>
                   </div>
                 </a>
-                <div className="flex items-center justify-center gap-2 text-sm  mb-6 font-[Poppins] text-[12px]">
+                <div className="flex items-center justify-center gap-2 text-[#F0F0F0] text-sm  mb-6 font-[Poppins] text-[12px]">
                   <PhoneCall className="w-4 h-4" />
                   <a href="tel:+44 016 8966 6990">
                     <span >+44 016 8966 6990</span>

@@ -5,8 +5,8 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div className="min-h-screen w-full bg-[#F5F5F7]">
-      <Navigation />
+    <div className="min-h-screen w-full bg-[#261911]">
+      {/* <Navigation /> */}
       <main className="max-w-[1440px] mx-auto">
         <Outlet />
         <Footer />
