@@ -92,7 +92,7 @@ export default function ReservationForm() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
               </div>
             </div>
 
@@ -102,7 +102,7 @@ export default function ReservationForm() {
                 Peoples Count
               </label>
               <div className="relative">
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4" />
+                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
                 <select
                   name="people"
                   value={formData.people}
@@ -142,7 +142,7 @@ export default function ReservationForm() {
 
             <div>
               <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
-                Time
+                Time 
               </label>
               <input
                 type="time"
@@ -158,7 +158,7 @@ export default function ReservationForm() {
 
           <Button
             type="submit"
-            className="w-full bg-[#F0A800] hover:bg-amber-600 text-white font-semibold py-2 rounded-md transition cursor-pointer"
+            className="w-full bg-[#F0A800] hover:bg-amber-600 text-[#F0F0F0] font-semibold py-2 rounded-md transition cursor-pointer"
           >
             Book Now
           </Button>

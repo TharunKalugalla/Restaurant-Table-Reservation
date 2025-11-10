@@ -8,7 +8,7 @@ export default function ReservationCompleteMassege({ formData, bookingData }) {
     <div className="max-w-2xl mx-auto">
       {/*---------------------------------------------------- Header ---------------------------------------------------*/}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-serif font-bold text-foreground mb-6">
+        <h1 className="text-4xl font-serif font-bold text-[#F0A800] mb-6">
           Thank you For Choosing Us!
         </h1>
 
@@ -45,7 +45,7 @@ export default function ReservationCompleteMassege({ formData, bookingData }) {
       {/*----------------------------------------------------- Action Buttons -------------------------------------------------*/}
       <div className="flex flex-col gap-y-1 mb-8">
         <a href="/">
-          <Button className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-md transition cursor-pointer">
+          <Button className="w-full bg-[#F0A800] hover:bg-amber-600 text-white font-semibold py-3 rounded-md transition cursor-pointer">
             Home
           </Button>
         </a>
