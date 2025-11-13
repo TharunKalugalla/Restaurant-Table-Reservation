@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ReservationForm() {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     table: "",
     people: "",
@@ -19,13 +20,8 @@ export default function ReservationForm() {
 
   useEffect(() => {
     const now = new Date();
-
-    // Get YYYY-MM-DD format
     const today = now.toISOString().split("T")[0];
-
-    // Get HH:MM format (24-hour)
     const currentTime = now.toTimeString().slice(0, 5);
-
     setMinDate(today);
     setMinTime(currentTime);
   }, []);
@@ -33,22 +29,26 @@ export default function ReservationForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    // If user changes date, adjust time restriction
-    if (name === "date") {
+    if (name === "table") {
+      setFormData((prev) => ({
+        ...prev,
+        table: value,
+        people: "",
+      }));
+    } else if (name === "date") {
+      setFormData((prev) => ({ ...prev, date: value }));
       if (value !== minDate) {
-        // Future date → allow any time
         setMinTime("00:00");
       } else {
-        // Today → restrict past times
         const now = new Date();
         const currentTime = now.toTimeString().slice(0, 5);
         setMinTime(currentTime);
       }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -57,6 +57,25 @@ export default function ReservationForm() {
     navigate("/booking", { state: formData });
   };
 
+  // Determine allowed people options based on selected table
+  const getAllowedPeople = () => {
+    const { table } = formData;
+    const tableNum = table.match(/\d+/) ? parseInt(table.match(/\d+/)[0]) : null;
+
+    if (!tableNum) return [];
+
+    const group2 = [1, 3, 6, 10, 11, 15];
+    const group4 = [3, 4, 7, 8, 9, 12, 13, 14];
+    const group6 = [2, 5];
+
+    if (group2.includes(tableNum)) return ["1-2 People"];
+    if (group4.includes(tableNum)) return ["1-4 People"];
+    if (group6.includes(tableNum)) return ["1-6 People"];
+    return [];
+  };
+
+  const allowedPeople = getAllowedPeople();
+
   return (
     <div className="flex flex-col mt-10">
       <div>
@@ -64,7 +83,7 @@ export default function ReservationForm() {
       </div>
 
       <Card className="p-6 border bg-[#261911] border-[#F0A800] mt-4">
-        <h3 className="text-lg font-serif font-bold text-[#ffff] text-center">
+        <h3 className="text-lg font-serif font-bold text-[#ffffff] text-center mb-4">
           Make a reservation
         </h3>
 
@@ -77,7 +96,7 @@ export default function ReservationForm() {
                 Table Number
               </label>
               <div className="relative">
-                <UtensilsCrossed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
+                <UtensilsCrossed className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#ffffff]" />
                 <select
                   name="table"
                   value={formData.table}
@@ -92,39 +111,44 @@ export default function ReservationForm() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#ffffff]" />
               </div>
             </div>
 
             {/* People */}
             <div>
               <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
-                Peoples Count
+                People Count
               </label>
               <div className="relative">
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#F0F0F0]" />
+                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#ffffff]" />
                 <select
                   name="people"
                   value={formData.people}
                   onChange={handleChange}
                   required
+                  disabled={!formData.table}
                   className="w-full pl-10 pr-10 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm appearance-none"
                 >
-                  <option value="">Select people count</option>
-                  <option value="2-2 People">2-2 People</option>
-                  <option value="4-4 People">4-4 People</option>
-                  <option value="6-6 People">6-6 People</option>
-                  <option value="6+ People">6+ People</option>
-                  <option value="10+ People">10+ People</option>
-                  <option value="20+ People">20+ People</option>
+                  <option value="">
+                    {formData.table
+                      ? "Select people count"
+                      : "Select table first"}
+                  </option>
+                  {allowedPeople.map((p) => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
                 </select>
-                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#ffffff]" />
               </div>
             </div>
           </div>
 
           {/* Date and Time */}
           <div className="grid grid-cols-2 gap-4">
+            {/* Date */}
             <div>
               <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
                 Date
@@ -134,21 +158,28 @@ export default function ReservationForm() {
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
+                onFocus={(e) =>
+                  e.target.showPicker && e.target.showPicker()
+                } // ensures picker opens
                 required
                 min={minDate}
                 className="w-full px-3 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm"
               />
             </div>
 
+            {/* Time */}
             <div>
               <label className="block text-sm font-medium text-[#F0F0F0] mb-2">
-                Time 
+                Time
               </label>
               <input
                 type="time"
                 name="time"
                 value={formData.time}
                 onChange={handleChange}
+                onFocus={(e) =>
+                  e.target.showPicker && e.target.showPicker()
+                } // ensures picker opens
                 required
                 min={minTime}
                 className="w-full px-3 py-2 border rounded-md border-[#3D2C21] text-[#F0F0F0] bg-[#261911] text-sm"
@@ -158,12 +189,25 @@ export default function ReservationForm() {
 
           <Button
             type="submit"
-            className="w-full bg-[#F0A800] hover:bg-amber-600 text-[#F0F0F0] font-semibold py-2 rounded-md transition cursor-pointer"
+            className="w-full bg-[#F0A800] hover:bg-amber-600 text-[#ffffff] font-semibold py-2 rounded-md transition cursor-pointer"
           >
             Book Now
           </Button>
         </form>
       </Card>
+
+      {/* Inline CSS for white picker icons */}
+      <style>{`
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          opacity: 1;
+        }
+        input[type="date"],
+        input[type="time"] {
+          color-scheme: dark;
+        }
+      `}</style>
     </div>
   );
 }
